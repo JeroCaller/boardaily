@@ -1,0 +1,17 @@
+header {
+    border: 1px solid black;
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 2em;
+}
+header > section {
+    border: 1px solid red;
+    width: 20em;
+}
+#page-title {
+    width: 30em;
+    text-align: center;
+}
+#page-title > h1 {
+    font-size: 3em;
+}
