@@ -2,14 +2,14 @@ header {
     border: 1px solid black;
     display: flex;
     justify-content: space-around;
-    margin-bottom: 2em;
+    margin-bottom: 5em;
 }
 header > section {
     border: 1px solid red;
     width: 20em;
 }
 #page-title {
-    width: 30em;
+    width: 20em;
     text-align: center;
 }
 #page-title > h1 {

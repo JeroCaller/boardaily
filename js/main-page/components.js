@@ -1,39 +1,42 @@
 /**
  * @attribute img-src - 이미지 경로
  * @attribute name - 해당 도구 이름
- * @attribute dest-link - 이동할 페이지 url
- * @example <tool-thumbnail img-src='images/myimage.jpg' name='todo' dest-link='todo.html'></tool-thumbnail>
+ * @attribute hover-bgcolor - 마우스 호버 시 적용할 배경색 (선택)
+ * @example <tool-thumbnail img-src='images/myimage.jpg' name='todo' hover-bgcolor='red'></tool-thumbnail>
  */
 export class ToolThumbnail extends HTMLElement {
     connectedCallback() {
-        this.attachShadow({mode: 'open'}).innerHTML = `<style>
-            section {
-                border: 3px solid blue;
-                width: 20em;
+        let computedStyle = window.getComputedStyle(document.documentElement);
+        let defaultWidth = computedStyle.getPropertyValue('--tool-thumbnail-default-width');
+        let defaultHeight = computedStyle.getPropertyValue('--tool-thumbnail-default-height');
+        let toolName = this.getAttribute('name');
+        let hoverBgColor = this.getAttribute('hover-bgcolor');
+        if (hoverBgColor == 'null') {
+            hoverBgColor = computedStyle.getPropertyValue('--tool-thumbnail-default-bgcolor');
+        }
+        this.innerHTML = `<style>
+            tool-thumbnail[name="${toolName}"] > section > a {
+                position: absolute;
+                z-index: 2;
             }
-            section > a {
-                text-decoration: none;
+            tool-thumbnail[name="${toolName}"] > section > div {
+                width: ${defaultWidth};
+                height: 0;
+                position: absolute;
+                z-index: 1;
             }
-            section > a > img {
-                width: 100%;
+            tool-thumbnail[name="${toolName}"] > section:hover > div {
+                background-color: ${hoverBgColor};
+                height: ${defaultHeight};
+                transition: height 0.5s;   
             }
-            section > a > p {
-                text-align: center;
-                width: 100%;
-                margin: 0px;
-                padding: 1em;
-                box-sizing: border-box;
-                font-size: larger;
-            }
-            section:hover {
-                background-color: blue;
-            }
-        </style>
-        <section>
-            <a href="${this.getAttribute('dest-link')}">
-                <img src="${this.getAttribute('img-src')}" alt="${this.getAttribute('name')}">
-                <p>${this.getAttribute('name')}</p>
+        </style>`;
+        this.innerHTML += `<section>
+            <a href="${this.getAttribute('id')}">
+                <img src="${this.getAttribute('img-src')}" alt="${toolName}">
+                <p>${toolName}</p>
             </a>
+            <div class="for-bg"></div>
         </section>`;
     }
 }

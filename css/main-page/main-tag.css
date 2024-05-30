@@ -1,0 +1,37 @@
+@import url('../variables.css');
+
+main {
+    display: grid;
+    grid-template-columns: repeat(3, var(--tool-thumbnail-default-width));
+    gap: 3em 3em;
+    justify-content: center;
+}
+
+tool-thumbnail {
+    display: inline-block;
+}
+tool-thumbnail > section {
+    border: 3px solid blue;
+    width: var(--tool-thumbnail-default-width);
+    height: var(--tool-thumbnail-default-height);
+    position: relative;
+}
+tool-thumbnail > section > a {
+    text-decoration: none;
+}
+tool-thumbnail > section > a > img {
+    width: var(--tool-thumbnail-default-width);
+}
+tool-thumbnail > section > a > p {
+    text-align: center;
+    width: 100%;
+    margin: 0px;
+    padding: 1em;
+    box-sizing: border-box;
+    font-size: larger;
+}
+/*
+tool-thumbnail > section:hover {
+    background-color: var(--tool-thumbnail-default-bgcolor);
+}
+*/

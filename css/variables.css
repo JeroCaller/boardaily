@@ -1,0 +1,5 @@
+:root {
+    --tool-thumbnail-default-width: 15em;
+    --tool-thumbnail-default-height: calc(var(--tool-thumbnail-default-width) + 5em);
+    --tool-thumbnail-default-bgcolor: skyblue;
+}
