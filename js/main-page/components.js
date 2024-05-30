@@ -21,14 +21,15 @@ export class ToolThumbnail extends HTMLElement {
             }
             tool-thumbnail[name="${toolName}"] > section > div {
                 width: ${defaultWidth};
-                height: 0;
+                height: ${defaultHeight};
                 position: absolute;
                 z-index: 1;
+                transform: scaleY(0);
             }
             tool-thumbnail[name="${toolName}"] > section:hover > div {
                 background-color: ${hoverBgColor};
-                height: ${defaultHeight};
-                transition: height 0.5s;   
+                transform: scaleY(1);
+                transition: transform 0.3s;   
             }
         </style>`;
         this.innerHTML += `<section>
