@@ -1,17 +1,35 @@
 header {
-    border: 1px solid black;
-    display: flex;
-    justify-content: space-around;
-    margin-bottom: 5em;
+    /*border: 1px solid black;*/
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 2.5em 8.5em;
+    grid-template-areas: 
+        "configs configs configs"
+        "title-left page-title title-right";
+    justify-content: center;
+    height: 11em;
 }
+/*
 header > section {
     border: 1px solid red;
-    width: 20em;
+}*/
+#configs {
+    grid-area: configs;
+}
+#title-left {
+    grid-area: title-left;
+}
+#title-right {
+    grid-area: title-right;
 }
 #page-title {
-    width: 20em;
     text-align: center;
+    grid-area: page-title;
 }
 #page-title > h1 {
     font-size: 3em;
+    margin: 0.2em;
+}
+#page-title > p {
+    margin: 0;
 }

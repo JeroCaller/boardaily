@@ -1,2 +1,12 @@
 @import url('main-page/header.css');
 @import url('main-page/main-tag.css');
+@import url('main-page/footer.css');
+
+body {
+    background-image: url('/images/background/board1.png');
+    background-size: cover;
+}
+
+#container {
+    background-color: rgba(255, 255, 255, 0.3);
+}
