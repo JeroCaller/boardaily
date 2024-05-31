@@ -1,0 +1,13 @@
+@import url('table-page/header.css');
+@import url('table-page/side-menu.css');
+@import url('table-page/main.css');
+@import url('table-page/footer.css');
+
+#container {
+    display: grid;
+    grid-template-columns: 1fr 5fr;
+    grid-template-rows: 1fr 8.4fr;
+    grid-template-areas: 
+        "header main"
+        "side-left main";
+}
