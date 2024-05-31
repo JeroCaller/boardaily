@@ -5,22 +5,29 @@ main {
     grid-template-columns: repeat(3, var(--tool-thumbnail-default-width));
     gap: 3em 3em;
     justify-content: center;
+    padding: 5em;
 }
 
 tool-thumbnail {
     display: inline-block;
+    background-color: rgb(248, 248, 242);
+    width: var(--tool-thumbnail-default-width);
+    height: var(--tool-thumbnail-default-height);
+    border: 3px groove black;
 }
 tool-thumbnail > section {
-    border: 3px solid blue;
     width: var(--tool-thumbnail-default-width);
     height: var(--tool-thumbnail-default-height);
     position: relative;
 }
 tool-thumbnail > section > a {
     text-decoration: none;
+    position: absolute;
+    z-index: 2;
 }
 tool-thumbnail > section > a > img {
-    width: var(--tool-thumbnail-default-width);
+    /*width: var(--tool-thumbnail-default-width);*/
+    width: 100%;
 }
 tool-thumbnail > section > a > p {
     text-align: center;
@@ -30,8 +37,11 @@ tool-thumbnail > section > a > p {
     box-sizing: border-box;
     font-size: larger;
 }
-/*
-tool-thumbnail > section:hover {
-    background-color: var(--tool-thumbnail-default-bgcolor);
+tool-thumbnail > section > .for-bg {
+    width: var(--tool-thumbnail-default-width);
+    height: var(--tool-thumbnail-default-height);
+    position: absolute;
+    z-index: 1;
+    transform: scaleY(0);
+    transform-origin: bottom;
 }
-*/

@@ -7,33 +7,20 @@
 export class ToolThumbnail extends HTMLElement {
     connectedCallback() {
         let computedStyle = window.getComputedStyle(document.documentElement);
-        let defaultWidth = computedStyle.getPropertyValue('--tool-thumbnail-default-width');
-        let defaultHeight = computedStyle.getPropertyValue('--tool-thumbnail-default-height');
         let toolName = this.getAttribute('name');
         let hoverBgColor = this.getAttribute('hover-bgcolor');
         if (hoverBgColor == 'null') {
             hoverBgColor = computedStyle.getPropertyValue('--tool-thumbnail-default-bgcolor');
         }
         this.innerHTML = `<style>
-            tool-thumbnail[name="${toolName}"] > section > a {
-                position: absolute;
-                z-index: 2;
-            }
-            tool-thumbnail[name="${toolName}"] > section > div {
-                width: ${defaultWidth};
-                height: ${defaultHeight};
-                position: absolute;
-                z-index: 1;
-                transform: scaleY(0);
-            }
-            tool-thumbnail[name="${toolName}"] > section:hover > div {
+            tool-thumbnail[name="${toolName}"] > section:hover > .for-bg {
                 background-color: ${hoverBgColor};
                 transform: scaleY(1);
-                transition: transform 0.3s;   
+                transition: transform 0.3s;
             }
         </style>`;
         this.innerHTML += `<section>
-            <a href="${this.getAttribute('id')}">
+            <a href="html/table.html${this.getAttribute('id')}">
                 <img src="${this.getAttribute('img-src')}" alt="${toolName}">
                 <p>${toolName}</p>
             </a>
