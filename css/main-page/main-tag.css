@@ -10,7 +10,7 @@ main {
 
 tool-thumbnail {
     display: inline-block;
-    background-color: rgb(248, 248, 242);
+    background-color: rgb(234, 234, 224);
     width: var(--tool-thumbnail-default-width);
     height: var(--tool-thumbnail-default-height);
     border: 3px groove black;
@@ -24,6 +24,7 @@ tool-thumbnail > section > a {
     text-decoration: none;
     position: absolute;
     z-index: 2;
+    color: rgb(58, 57, 57);
 }
 tool-thumbnail > section > a > img {
     /*width: var(--tool-thumbnail-default-width);*/
