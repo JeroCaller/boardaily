@@ -1,32 +1,32 @@
 [
     {
         "name": "계산기",
-        "img-src": "images/calculator.png",
+        "img-src": "/images/calculator.png",
         "hover-bgcolor": null
     },
     {
         "name": "나이 계산기",
-        "img-src": "images/age.png",
+        "img-src": "/images/age.png",
         "hover-bgcolor": "#fffdb5"
     },
     {
         "name": "달력",
-        "img-src": "images/calendar.png",
+        "img-src": "/images/calendar.png",
         "hover-bgcolor": "#D1D8C5"
     },
     {
         "name": "Todo list",
-        "img-src": "images/todolist.png",
+        "img-src": "/images/todolist.png",
         "hover-bgcolor": "#DBB5B5"
     },
     {
         "name": "시계",
-        "img-src": "images/watch.png",
+        "img-src": "/images/watch.png",
         "hover-bgcolor": "#799351"
     },
     {
         "name": "날씨",
-        "img-src": "images/weather.png",
+        "img-src": "/images/weather.png",
         "hover-bgcolor": "#5AB2FF"
     }
 ]

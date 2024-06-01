@@ -1,7 +1,10 @@
-import {SideMenu} from './table-page/side-menu.js';
+import {createSideMenu} from './table-page/side-menu.js';
 
-function main() {
-    customElements.define('side-menu', SideMenu);
+async function main() {
+    const navTag = document.querySelector('#side-left > nav');
+
+    let sideMenuElement = await createSideMenu();
+    navTag.append(sideMenuElement);
 }
 
 main();
