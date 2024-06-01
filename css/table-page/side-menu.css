@@ -1,4 +1,9 @@
 #side-left {
     grid-area: side-left;
     border: 1px solid red;
+    padding: 0;
+}
+#side-left > nav {
+    margin: 0;
+    padding: 0;
 }

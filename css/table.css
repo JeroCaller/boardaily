@@ -5,8 +5,8 @@
 
 #container {
     display: grid;
-    grid-template-columns: 1fr 5fr;
-    grid-template-rows: 1fr 8.4fr;
+    grid-template-columns: 18em 100%;
+    grid-template-rows: 2fr 8.4fr;
     grid-template-areas: 
         "header main"
         "side-left main";

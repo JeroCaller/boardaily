@@ -1,6 +1,14 @@
 header {
     grid-area: header;
-}
-#small-title {
     border: 1px solid black;
+    margin-bottom: 1em;
+}
+#small-title > a {
+    text-decoration: none;
+    color: black;
+    text-align: center;
+}
+#small-title > a > h1 {
+    font-size: 3em;
+    margin: 0.2em;
 }
