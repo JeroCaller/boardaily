@@ -3,5 +3,5 @@ export async function getToolInfoInJson() {
 }
 
 export function extractFileName(filePath) {
-    return filePath.split('.')[0].split('/')[1];
+    return filePath.split('/')[2].split('.')[0];
 }
