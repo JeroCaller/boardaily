@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <!-- 아래의 <link>도 추가해야 정상 작동한다. -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <title>Document</title>
+</head>
+<body>
+    <!-- 
+        shadow DOM을 사용한 웹 컴포넌트 내에서 google material icon을 
+        사용할 수 있는지 테스트
+    -->
+    <template id="menuIcon">
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0');
+            div {
+                border: 1px solid blue;
+            }
+        </style>
+        <div class="material-symbols-outlined">menu</div>
+    </template>
+    <script>
+        customElements.define('menu-item', class extends HTMLElement {
+            connectedCallback() {
+                //this.useTemplate();
+                this.defineInnerHTML();
+            }
+            useTemplate() {
+                this.attachShadow({mode: 'open'}).append(menuIcon.content.cloneNode(true));
+            }
+            defineInnerHTML() {
+                this.attachShadow({mode: 'open'}).innerHTML = `<style>
+                    @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0');
+                    div {
+                        border: 1px solid blue;
+                    }
+                </style>
+                <div class="material-symbols-outlined">menu</div>`;
+            }
+        });
+    </script>
+    <menu-item></menu-item>
+
+    <!-- 
+        결론: shadowRoot에서 <style> 태그 내의 @import url()과, 문서의 <head> 태그 내에서 
+        <link>를 동시에 사용하여 해당 http 요청을 해야 정상 작동한다.
+    -->
+</body>
+</html>
