@@ -6,31 +6,55 @@ let slotNameForItems = "item-in-menu";
  * @description SideMenu 커스텀 요소의 자식 요소로 활용된다. 하나의 아이템을 담을 때 사용. 
  * \<menu-item\> 태그로 정의하여 사용한다. 
  * @attribute slot - slot="item-in-menu"로 지정한다.
+ * @attribute img-src - 이미지 경로
+ * @attribute item-name - 아이템 이름
+ * @example <menu-item slot="item-in-menu" img-src="이미지경로" item-name="아이템이름"></menu-item>
  */
 class MenuItem extends HTMLElement {
     connectedCallback() {
-        this.attachShadow({mode: 'open'}).innerHTML = `<style>
-            :host(:hover) {
-                background-color: blue;
-            }
+        this.initAttributes();
+        this.attachShadow({mode: 'open'}).innerHTML = this._setStyle() + this._setInnerHTML();
+    }
+
+    initAttributes() {
+        this.imgSrc = this.getAttribute('img-src');
+        this.itemName = this.getAttribute('item-name');
+    }
+
+    _setStyle() {
+        return `<style>
             :host {
                 --item-content-height: 1.2em;
-                color: beige;
+                --add-size: 0.5em;
                 font-size: var(--item-content-height);
                 display: flex;
+                align-items: center;
                 height: 1em;
                 padding: 1em;
             }
-            ::slotted(div) {
-                display: inline-block;
-                width: var(--item-content-height);
-                height: var(--item-content-height);
-                background-image: url('${this.firstElementChild.getAttribute('src')}');
-                background-size: cover;
+            :host(:hover) {
+                background-color: #AD88C6;
+                cursor: pointer;
+            }
+            a {
+                width: 100%;
+                text-decoration: none;
+                color: #FFE6E6;
+                display: flex;
+                align-items: center;
+            }
+            a > img {
+                width: calc(var(--item-content-height) + var(--add-size));
                 margin-right: 1em;
             }
-        </style>
-        <slot></slot>`;
+        </style>`;
+    }
+
+    _setInnerHTML() {
+        return `<a href="/html/table.html#${helper.extractFileName(this.imgSrc)}">
+            <img src="${this.imgSrc}"></custom-img>
+            <span>${this.itemName}</span>
+        </a>`;
     }
 }
 
@@ -45,7 +69,15 @@ class MenuItem extends HTMLElement {
  */
 class SideMenu extends HTMLElement {
     connectedCallback() {
+        this.getWidthAttr();
         this.attachShadow({mode: 'open'}).innerHTML = this.combineStyleAndHTML();
+    }
+
+    getWidthAttr() {
+        this.width = this.getAttribute('width');
+        if (this.width == null) {
+            this.width = '100%';
+        }
     }
 
     /**
@@ -53,18 +85,37 @@ class SideMenu extends HTMLElement {
      */
     _setStyle() {
         this.styleString = `<style>
+            @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0');
             :host {
+                --background-color: #7469B6;
+                --menu-icon-size: 2em;
                 display: flex;
-                width: 100%;
+                width: ${this.width};
+                transform: translateX(calc(-${this.width} + var(--menu-icon-size)));
+            }
+            :host(:hover) {
+                transform: translateX(0);
+                transition: transform 0.5s;
+            }
+            :host(:not(:hover)) {
+                /* 해당 요소에서 마우스가 떠났을 때 메뉴 닫히는 모션이 부드럽게 진행되도록 함 */
+                transform: translateX(calc(-${this.width} + var(--menu-icon-size)));
+                transition: transform 0.5s;
             }
             #item-container {
-                width: 100%;
-                background-color: #c73659;
+                width: ${this.width};
+                background-color: var(--background-color);
             }
             #menu-icon {
-                width: 4em;
-                height: 4em;
-                background-color: #c73659;
+                width: var(--menu-icon-size);
+                height: var(--menu-icon-size);
+                background-color: var(--background-color);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            #menu-icon:hover {
+                cursor: pointer;
             }
         </style>`;
     }
@@ -92,13 +143,16 @@ export async function createSideMenu() {
     customElements.define('menu-item', MenuItem);
     
     let newSideMenu = document.createElement('side-menu');
+    newSideMenu.setAttribute('width', '18em');
+
     let toolsJson = await helper.getToolInfoInJson();
     for(let i = 0; i < toolsJson.length; i++) {
         let imgSrc = toolsJson[i]["img-src"];
-        newSideMenu.insertAdjacentHTML('beforeend', `<menu-item slot="${slotNameForItems}">
-            <div id="#${helper.extractFileName(imgSrc)}" src="${imgSrc}"></div>
-            <span>${toolsJson[i]["name"]}</span>
-        </menu-item>
+        newSideMenu.insertAdjacentHTML('beforeend', `<menu-item 
+        slot="${slotNameForItems}"
+        img-src="${imgSrc}"
+        item-name="${toolsJson[i]["name"]}"
+        ></menu-item>
         `);
     }
 
