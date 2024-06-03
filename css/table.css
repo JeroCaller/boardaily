@@ -4,6 +4,7 @@
 @import url('table-page/footer.css');
 
 #container {
+    width: 66em;
     display: grid;
     grid-template-columns: 18em 100%;
     grid-template-rows: 2fr 8.4fr;
