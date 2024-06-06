@@ -3,4 +3,10 @@ main {
     width: 100%;
     grid-area: main;
     padding: 5em;
+    position: relative;
+}
+
+#content-main {
+    position: absolute;
+    left: 25%;
 }

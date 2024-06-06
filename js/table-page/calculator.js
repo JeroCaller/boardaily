@@ -48,11 +48,15 @@ class Calculator extends HTMLElement {
             :host {
                 --button-size: 2.5em;
                 --button-font-size: 2em;
+                --gap-column: 0.2em;
+                --button-column-number: 4;
                 
                 display: grid;
-                grid-template-columns: repeat(4, calc(var(--button-size) * 2));
-                gap: 0.1em 0.2em;
+                grid-template-columns: repeat(var(--button-column-number), calc(var(--button-size) * 2));
+                gap: 0.1em var(--gap-column);
                 border: 3px solid black;
+                width: calc(var(--button-size) * 2 * var(--button-column-number) + var(--gap-column) * calc(var(--button-column-number) - 1));
+                padding: 0.5em;
             }
             calc-button {
                 display: flex;
@@ -69,7 +73,7 @@ class Calculator extends HTMLElement {
                 background-color: #C7B7A3;
             }
             calc-displayer {
-                width: 100%;
+                width: 100.6%;
                 height: 5.5em;
                 background-color: #B5C18E;
                 grid-column: 1/5;
