@@ -1,4 +1,20 @@
-class CalcDisplayer extends HTMLElement {}
+import * as calcLogic from "./calculator-logic.js";
+
+class CalcDisplayer extends HTMLElement {
+    connectedCallback() {
+        this.innerHTML = `<style>
+            input {
+                width: 98%;
+                background-color: rgba(0, 0, 0, 0);
+                font-size: ${this.getAttribute('font-size')};
+            }
+        </style>
+        <div id="text-container">
+            <input type="text" id="input-status" readonly>
+            <input type="text" id="result" readonly>
+        </div>`;
+    }
+}
 
 /**
  * @description Calculator 컴포넌트를 구성하느 버튼 요소 클래스.
@@ -11,7 +27,7 @@ class CalcDisplayer extends HTMLElement {}
 class CalcButton extends HTMLElement {
     connectedCallback() {
         this.innerHTML = `${this.getAttribute('value')}`;
-        if(this.getAttribute('value') == '<-') {
+        if (this.getAttribute('value') == '<-') {
             this.setAttribute('class', 'material-symbols-outlined');
             this.innerHTML = 'backspace';
         }
@@ -19,7 +35,7 @@ class CalcButton extends HTMLElement {
 }
 
 class Calculator extends HTMLElement {
-    letterMaxSize = 17;
+    displayFontSize = '2em';
 
     connectedCallback() {
         this.attachShadow({mode: 'open'}).innerHTML = this.combineStyleAndHTML();
@@ -54,12 +70,11 @@ class Calculator extends HTMLElement {
             }
             calc-displayer {
                 width: 100%;
-                height: 3em;
+                height: 5.5em;
                 background-color: #B5C18E;
                 grid-column: 1/5;
                 border: 1px solid black;
-                font-size: 2em;
-                padding: 0.3em;
+                padding: 0.1em;
                 box-sizing: border-box;
             }
             .material-symbols-outlined {
@@ -72,7 +87,7 @@ class Calculator extends HTMLElement {
     }
 
     _setInnerHTML() {
-        let iHTML = `<calc-displayer></calc-displayer>`;
+        let iHTML = `<calc-displayer font-size="${this.displayFontSize}"></calc-displayer>`;
         iHTML += this._constructKeyPads();
         return iHTML;
     }
@@ -84,7 +99,7 @@ class Calculator extends HTMLElement {
     _constructKeyPads() {
         let padHTML = ``;
         let btnValues = [
-            "%", "C", "CE", "/",
+            "C", "()", "%", "/",
             "7", "8", "9", "X",
             "4", "5", "6", "-",
             "1", "2", "3", "+",
@@ -97,27 +112,56 @@ class Calculator extends HTMLElement {
     }
 
     _setEventHandlers() {
-        const calcDisp = this.shadowRoot.querySelector('calc-displayer');
+        const calcInputDisp = this.shadowRoot.querySelector('calc-displayer > #text-container > #input-status');
+        const calcResultDisp = this.shadowRoot.querySelector('calc-displayer > #text-container > #result');
         const calcBtns = this.shadowRoot.querySelectorAll('calc-button');
         for (let oneBtn of calcBtns) {
             switch (oneBtn.getAttribute('value')) {
                 case '<-':
                     oneBtn.addEventListener('click', () => {
-                        if(calcDisp.innerText.length <= 0) {
+                        if (calcInputDisp.value.length <= 0) {
                             return;
                         }
-                        calcDisp.innerText = calcDisp.innerText.substring(0, calcDisp.innerText.length-1);
+                        calcInputDisp.value = calcInputDisp.value.substring(0, calcInputDisp.value.length-1);
+                        calcResultDisp.value = '';
                     });
                     break;
                 case 'C':
-                    oneBtn.addEventListener('click', () => calcDisp.innerText = '');
+                    oneBtn.addEventListener('click', () => {
+                        calcInputDisp.value = '';
+                        calcResultDisp.value = '';
+                    });
+                    break;
+                case '=':
+                    oneBtn.addEventListener('click', () => {
+                        if (!calcInputDisp.value) {
+                            // 아무런 값도 입력되지 않았다면 패스.
+                            return;
+                        }
+                        calcResultDisp.value = calcLogic.calculateExpression(
+                            calcLogic.autoFillParenthesis(calcInputDisp.value)
+                        );
+                        calcInputDisp.value = calcLogic.autoFillParenthesis(calcInputDisp.value);
+                    });
+                    break;
+                case '()':
+                    oneBtn.addEventListener('click', () => {
+                        calcInputDisp.value += calcLogic.addWhichParenthesis(calcInputDisp.value);
+                    });
+                    break;
+                case 'X':
+                    oneBtn.addEventListener('click', () => calcInputDisp.value += '*');
                     break;
                 default:
                     oneBtn.addEventListener('click', event => {
-                        if(calcDisp.innerText.length == this.letterMaxSize) {
-                            return;
-                        }
-                        calcDisp.innerText += event.target.innerText;
+                        calcInputDisp.value += event.target.innerText;
+                        /*
+                            텍스트의 길이가 디스플레이의 정해진 길이를 넘어갈 경우, 맨 마지막 문자가 디스플레이의 
+                            맨 오른쪽에 오도록 위치시킨다. 이 경우, 텍스트의 왼쪽에 위치한 문자들은 디스플레이에서 
+                            잘려 보이지 않는다. 다만 이 경우, 키보드의 왼쪽 화살표 키를 누르면 잘린 문자들을 다시 볼 수 있다. 
+                        */
+                        calcInputDisp.setSelectionRange(calcInputDisp.value.length, calcInputDisp.value.length);
+                        calcInputDisp.scrollLeft = calcInputDisp.value.length * parseInt(this.displayFontSize[0]) * 16;
                     });
             }
         }

@@ -3,6 +3,11 @@
 @import url('table-page/main.css');
 @import url('table-page/footer.css');
 
+/* dark mode
+body {
+    background-color: rgb(50, 50, 50);
+}
+*/
 #container {
     width: 66em;
     display: grid;
