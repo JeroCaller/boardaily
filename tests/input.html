@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>input 텍스트 커서 위치 테스트</title>
+    <style>
+        :root {
+            --my-font-size: 2em;
+        }
+        #btn-container {
+            border: 3px solid black;
+            display: grid;
+            grid-template-columns: repeat(3, 4em);
+        }
+        .number-pad {
+            width: 3em;
+            height: 3em;
+            border: 1px solid blue;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        input {
+            height: 2em;
+            font-size: var(--my-font-size);
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <input type="text" size="5" value="10" readonly>
+    </div>
+    <script>
+        const divContainer = document.querySelector('#container');
+        const btnContainer = document.createElement('div');
+        btnContainer.setAttribute('id', 'btn-container');
+        let btnArray = [
+            "7", "8", "9",
+            "4", "5", "6",
+            "1", "2", "3",
+            ",", "0", "."
+        ];
+        for (let btnChar of btnArray) {
+            btnContainer.insertAdjacentHTML('beforeend', `<div class="number-pad">${btnChar}</div>`);
+        }
+        divContainer.append(btnContainer);
+    </script>
+    <script type="module">
+        let fontSize = getComputedStyle(document.documentElement).getPropertyPriority('--my-font-size');
+        console.log(fontSize);
+        console.log(fontSize == '');
+        console.log(typeof fontSize);
+        const numberPads = document.querySelectorAll('.number-pad');
+        const inputElement = document.querySelector('input');
+        for(let np of numberPads) {
+            np.addEventListener('click', () => {
+                inputElement.value += np.innerText;
+                inputElement.setSelectionRange(inputElement.value.length, inputElement.value.length);
+                inputElement.scrollLeft = inputElement.value.length * 2 * 16;
+            });
+        }
+    </script>
+</body>
+</html>
