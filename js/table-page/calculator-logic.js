@@ -30,7 +30,6 @@ function countParenthesis(expStr) {
             closedCount += 1;
         }
     });
-
     return openCount - closedCount;
 }
 
@@ -100,16 +99,65 @@ export function autoFillParenthesis(expStr) {
             expStr += ")";
         }
     }
-
     return expStr;
 }
 
 /**
  * 수식에 % 기호가 있는 경우 이를 계산한 결과를 다시 수식에 대입하는 함수.
  * @param {string} expStr - 문자열 형태로 나타낸 수식
+ * @returns {string} 수정이 완료된 수식 문자열
  * @example - console.log(replacePercent("100+20%")); // "120"
  */
 export function replacePercent(expStr) {
-    // 구현 필요.
-    return;
+    /*
+        \d+.?\d* : 정수 또는 실수
+    */
+    let matchResult = expStr.match(/\d+.?\d*[-+*\/]\d+.?\d*%/g);
+    if (!matchResult) {
+        return expStr;
+    }
+
+    let replacedSrc = expStr;
+    let replacedIdx = [];
+    const delimiter = "@";
+    for (let matchedExp of matchResult) {
+        replacedIdx.push(replacedSrc.indexOf(matchedExp));
+        replacedSrc = replacedSrc.replace(matchedExp, delimiter);
+    }
+    let replacedSrcArr = replacedSrc.split('');
+    /*
+    console.log(replacedSrc);
+    console.log(replacedSrcArr);
+    console.log(replacedIdx);
+    */
+    // %가 포함된 수식을 %가 없는 수로 바꾼다. 
+    for (let [idx, matchedExp] of matchResult.entries()) {
+        let binaryOperator = matchedExp.match(/[^\d%.]/)[0];
+        /*
+        console.log(matchedExp);
+        console.log(binaryOperator);
+        */
+        let nums = matchedExp.split(binaryOperator);
+        for (let i = 0; i < nums.length; i++) {
+            nums[i] = parseFloat(nums[i]);
+        }
+        let calculatedNum = nums[0] * (nums[1] / 100);
+        matchResult[idx] = nums[0].toString() + binaryOperator + calculatedNum.toString();
+    }
+    
+    /*
+    console.log(matchResult);
+    console.log(replacedIdx);
+    console.log(replacedSrcArr);
+    */
+    for (let i = 0; i < replacedSrcArr.length; i++) {
+        let targetIndex = replacedSrcArr.indexOf(delimiter);
+        if (targetIndex == -1) {
+            break;
+        }
+        replacedSrcArr[targetIndex] = matchResult[i];
+    }
+    //console.log(replacedSrcArr);
+
+    return replacedSrcArr.join('');
 }
