@@ -145,7 +145,7 @@ export async function createSideMenu() {
     let newSideMenu = document.createElement('side-menu');
     newSideMenu.setAttribute('width', '18em');
 
-    let tools = await helper.toolsInfo;
+    const tools = await helper.toolsInfo;
     for(let prop in tools) {
         let imgSrc = tools[prop]["img-src"];
         newSideMenu.insertAdjacentHTML('beforeend', `<menu-item 

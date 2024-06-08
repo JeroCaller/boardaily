@@ -6,7 +6,7 @@ async function main() {
 
     customElements.define('tool-thumbnail', ToolThumbnail);
 
-    let tools = await helper.toolsInfo;
+    const tools = await helper.toolsInfo;
     for (let prop in tools) {
         let iHTML = `<tool-thumbnail
         id="#${prop}"
