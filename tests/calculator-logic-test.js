@@ -52,12 +52,16 @@ function main(allSilence) {
         [testAddWhichParenthesis, ["(3+(20/(9+2))", ")"]],
         [testAddWhichParenthesis, ["(3+(20/(9+2))*2", ")"]],
         [testAddWhichParenthesis, ["(3+(20/(9+2)))*2", "*("]],
+        [testAddWhichParenthesis, ["(3", ")"]],
+        [testAddWhichParenthesis, ["(3+5", ")"]],
         [testReplacePercent, ["100+20", "100+20"]],
         [testReplacePercent, ["100%", "100%"]],
         [testReplacePercent, ["100+20%", "100+20"]],
         [testReplacePercent, ["200+20%", "200+40"]],
         [testReplacePercent, ["200+30%+300+10%", "200+60+300+30"]],
         [testReplacePercent, ["(30+30%)+(20+40%)", "(30+9)+(20+8)"]],
+        [testReplacePercent, ["30+30%+10", "30+9+10"]],
+        [testReplacePercent, ["50+(50%+2)", "50+(50%+2)"]],
     ];
     let appliedTests = [];
     for (let record of testArr) {
@@ -66,4 +70,4 @@ function main(allSilence) {
     testTools.countTests(...appliedTests);
 }
 
-main();
+main(true);

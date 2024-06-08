@@ -1,3 +1,8 @@
+/**
+ * 문자열로 전달된 수식을 계산하여 이를 반환한다.
+ * @param {string} expStr - 문자열 형태의 전체 수식
+ * @returns {number} 수식 결과값
+ */
 export function calculateExpression(expStr) {
     try {
         return (new Function(`return ${expStr};`))();
@@ -76,6 +81,7 @@ export function addWhichParenthesis(expStr) {
         case openParth:
             return openParth;
         case "\\d":
+        case '%':
         case closedParth:
             return returnOpenOrClosed();
         default:
