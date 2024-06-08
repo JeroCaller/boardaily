@@ -6,25 +6,40 @@
  */
 export class ToolThumbnail extends HTMLElement {
     connectedCallback() {
+        this._initAttributes();
+        this.innerHTML = this.combineStyleAndHTML();
+    }
+
+    _initAttributes() {
+        this.toolName = this.getAttribute('name');
+        this.hoverBgColor = this.getAttribute('hover-bgcolor');
         let computedStyle = window.getComputedStyle(document.documentElement);
-        let toolName = this.getAttribute('name');
-        let hoverBgColor = this.getAttribute('hover-bgcolor');
-        if (hoverBgColor == 'null') {
-            hoverBgColor = computedStyle.getPropertyValue('--tool-thumbnail-default-bgcolor');
+        if (this.hoverBgColor == 'null') {
+            this.hoverBgColor = computedStyle.getPropertyValue('--tool-thumbnail-default-bgcolor');
         }
-        this.innerHTML = `<style>
-            tool-thumbnail[name="${toolName}"] > section:hover > .for-bg {
-                background-color: ${hoverBgColor};
+    }
+
+    _setStyle() {
+        return `<style>
+            tool-thumbnail[name="${this.toolName}"] > section:hover > .for-bg {
+                background-color: ${this.hoverBgColor};
                 transform: scaleY(1);
                 transition: transform 0.3s;
             }
         </style>`;
-        this.innerHTML += `<section>
+    }
+
+    _setInnerHTML() {
+        return `<section>
             <a href="html/table.html${this.getAttribute('id')}">
-                <img src="${this.getAttribute('img-src')}" alt="${toolName}">
-                <p>${toolName}</p>
+                <img src="${this.getAttribute('img-src')}" alt="${this.toolName}">
+                <p>${this.toolName}</p>
             </a>
             <div class="for-bg"></div>
         </section>`;
+    }
+
+    combineStyleAndHTML() {
+        return this._setStyle() + this._setInnerHTML();
     }
 }
