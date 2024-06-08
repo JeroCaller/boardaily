@@ -39,7 +39,9 @@ class Calculator extends HTMLElement {
 
     connectedCallback() {
         this.attachShadow({mode: 'open'}).innerHTML = this.combineStyleAndHTML();
+        this._initElementVars();
         this._setEventHandlers();
+        this._setKeyboardEventHandler()
     }
 
     _setStyle() {
@@ -115,60 +117,94 @@ class Calculator extends HTMLElement {
         return padHTML;
     }
 
+    _initElementVars() {
+        this.calcInputDisp = this.shadowRoot.querySelector('calc-displayer > #text-container > #input-status');
+        this.calcResultDisp = this.shadowRoot.querySelector('calc-displayer > #text-container > #result');
+        this.calcBtns = this.shadowRoot.querySelectorAll('calc-button');
+    }
+
     _setEventHandlers() {
-        const calcInputDisp = this.shadowRoot.querySelector('calc-displayer > #text-container > #input-status');
-        const calcResultDisp = this.shadowRoot.querySelector('calc-displayer > #text-container > #result');
-        const calcBtns = this.shadowRoot.querySelectorAll('calc-button');
-        for (let oneBtn of calcBtns) {
+        for (let oneBtn of this.calcBtns) {
             switch (oneBtn.getAttribute('value')) {
                 case '<-':
                     oneBtn.addEventListener('click', () => {
-                        if (calcInputDisp.value.length <= 0) {
+                        if (this.calcInputDisp.value.length <= 0) {
                             return;
                         }
-                        calcInputDisp.value = calcInputDisp.value.substring(0, calcInputDisp.value.length-1);
-                        calcResultDisp.value = '';
+                        this.calcInputDisp.value = this.calcInputDisp.value.substring(0, this.calcInputDisp.value.length-1);
+                        this.calcResultDisp.value = '';
                     });
                     break;
                 case 'C':
                     oneBtn.addEventListener('click', () => {
-                        calcInputDisp.value = '';
-                        calcResultDisp.value = '';
+                        this.calcInputDisp.value = '';
+                        this.calcResultDisp.value = '';
                     });
                     break;
                 case '=':
                     oneBtn.addEventListener('click', () => {
-                        if (!calcInputDisp.value) {
+                        if (!this.calcInputDisp.value) {
                             // 아무런 값도 입력되지 않았다면 패스.
                             return;
                         }
-                        calcResultDisp.value = calcLogic.calculateExpression(
-                            calcLogic.autoFillParenthesis(calcInputDisp.value)
+                        this.calcResultDisp.value = calcLogic.calculateExpression(
+                            calcLogic.replacePercent(
+                                calcLogic.autoFillParenthesis(this.calcInputDisp.value)
+                            )
                         );
-                        calcInputDisp.value = calcLogic.autoFillParenthesis(calcInputDisp.value);
+                        this.calcInputDisp.value = calcLogic.autoFillParenthesis(this.calcInputDisp.value);
                     });
                     break;
                 case '()':
                     oneBtn.addEventListener('click', () => {
-                        calcInputDisp.value += calcLogic.addWhichParenthesis(calcInputDisp.value);
+                        this.calcInputDisp.value += calcLogic.addWhichParenthesis(this.calcInputDisp.value);
                     });
                     break;
                 case 'X':
-                    oneBtn.addEventListener('click', () => calcInputDisp.value += '*');
+                    oneBtn.addEventListener('click', () => this.calcInputDisp.value += '*');
                     break;
                 default:
                     oneBtn.addEventListener('click', event => {
-                        calcInputDisp.value += event.target.innerText;
+                        this.calcInputDisp.value += event.target.innerText;
                         /*
                             텍스트의 길이가 디스플레이의 정해진 길이를 넘어갈 경우, 맨 마지막 문자가 디스플레이의 
                             맨 오른쪽에 오도록 위치시킨다. 이 경우, 텍스트의 왼쪽에 위치한 문자들은 디스플레이에서 
                             잘려 보이지 않는다. 다만 이 경우, 키보드의 왼쪽 화살표 키를 누르면 잘린 문자들을 다시 볼 수 있다. 
                         */
-                        calcInputDisp.setSelectionRange(calcInputDisp.value.length, calcInputDisp.value.length);
-                        calcInputDisp.scrollLeft = calcInputDisp.value.length * parseInt(this.displayFontSize[0]) * 16;
+                        this.calcInputDisp.setSelectionRange(this.calcInputDisp.value.length, this.calcInputDisp.value.length);
+                        this.calcInputDisp.scrollLeft = this.calcInputDisp.value.length * parseInt(this.displayFontSize[0]) * 16;
                     });
             }
         }
+    }
+
+    _setKeyboardEventHandler() {
+        document.addEventListener('keydown', event => {
+            let whatKey = event.key;
+            // 키보드로 입력된 문자를 커스텀 계산기가 이해할 수 있는 문자로 변형.
+            switch (whatKey) {
+                case "Backspace":
+                    whatKey = "<-";
+                    break;
+                case "*":
+                    whatKey = "X";
+                    break;
+                case "Delete":
+                    whatKey = "C";
+                    break;
+                case "(":
+                case ")":
+                    whatKey = "()";
+                    break;
+                case "Enter":
+                    whatKey = "=";
+            }
+            for (let oneBtn of this.calcBtns) {
+                if (whatKey == oneBtn.getAttribute('value')) {
+                    oneBtn.dispatchEvent(new Event('click'));
+                }
+            }
+        });
     }
 }
 
