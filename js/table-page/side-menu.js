@@ -145,13 +145,13 @@ export async function createSideMenu() {
     let newSideMenu = document.createElement('side-menu');
     newSideMenu.setAttribute('width', '18em');
 
-    let toolsJson = await helper.getToolInfoInJson();
-    for(let i = 0; i < toolsJson.length; i++) {
-        let imgSrc = toolsJson[i]["img-src"];
+    let tools = await helper.toolsInfo;
+    for(let prop in tools) {
+        let imgSrc = tools[prop]["img-src"];
         newSideMenu.insertAdjacentHTML('beforeend', `<menu-item 
         slot="${slotNameForItems}"
         img-src="${imgSrc}"
-        item-name="${toolsJson[i]["name"]}"
+        item-name="${tools[prop]["name"]}"
         ></menu-item>
         `);
     }
