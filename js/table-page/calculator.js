@@ -209,9 +209,15 @@ class Calculator extends HTMLElement {
 }
 
 export function createCalcElement() {
-    customElements.define('calc-displayer', CalcDisplayer);
-    customElements.define('calc-button', CalcButton);
-    customElements.define('custom-calculator', Calculator);
+    try {
+        customElements.define('calc-displayer', CalcDisplayer);
+        customElements.define('calc-button', CalcButton);
+        customElements.define('custom-calculator', Calculator);
+    } catch (errObj) {
+        if (!errObj instanceof DOMException) {
+            throw errObj;
+        }
+    }
 
     let calculatorElement = document.createElement('custom-calculator');
 
