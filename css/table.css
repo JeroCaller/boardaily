@@ -9,11 +9,12 @@ body {
 }
 */
 #container {
-    width: 66em;
+    width: 100%;
     display: grid;
-    grid-template-columns: 18em 100%;
+    grid-template-columns: 1fr 5fr 1fr;
     grid-template-rows: 2fr 8.4fr;
+    gap: 0 0.5em;
     grid-template-areas: 
-        "header main"
-        "side-left main";
+        "header main side-right"
+        "side-left main side-right";
 }

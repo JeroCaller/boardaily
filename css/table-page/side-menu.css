@@ -7,3 +7,9 @@
     margin: 0;
     padding: 0;
 }
+
+#side-right {
+    grid-area: side-right;
+    border: 1px solid pink;
+    width: 100%;
+}
