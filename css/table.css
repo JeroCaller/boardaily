@@ -12,7 +12,7 @@ body {
     width: 100%;
     display: grid;
     grid-template-columns: 1fr 5fr 1fr;
-    grid-template-rows: 2fr 8.4fr;
+    grid-template-rows: 9em 100%;
     gap: 0 0.5em;
     grid-template-areas: 
         "header main side-right"
