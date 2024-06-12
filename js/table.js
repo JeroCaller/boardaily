@@ -1,6 +1,7 @@
 import {createSideMenu} from './table-page/side-menu.js';
 import {createCalcElement} from './table-page/calculator.js';
 import { createAgeCalcElement } from './table-page/age-calculator.js';
+import { createCalendarElement } from './table-page/calendar.js';
 import * as helper from './helper.js';
 
 async function constructMenu() {
@@ -31,6 +32,9 @@ function attachToolElement(currentPageName, parentElement) {
             break;
         case "age":
             toolElement = createAgeCalcElement();
+            break;
+        case "calendar":
+            toolElement = createCalendarElement();
             break;
     }
     if (toolElement) {
