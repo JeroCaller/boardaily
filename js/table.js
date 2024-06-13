@@ -68,6 +68,11 @@ async function main() {
         let toolName = helper.extractFileName(event.target.getAttribute('img-src'));
         attachToolElement(toolName, contentMain);
     });
+    /* // 테스트 용
+    sideMenuElement.addEventListener('click', event => {
+        console.log(event.target.getAttribute('img-src') + " : " + location.hash);
+    });
+    */
 
     // 메인 페이지에서 특정 툴 페이지로 넘어갈 때.
     attachToolElement(currentPageName, contentMain);

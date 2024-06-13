@@ -14,6 +14,7 @@ class MenuItem extends HTMLElement {
     connectedCallback() {
         this.initAttributes();
         this.attachShadow({mode: 'open'}).innerHTML = this._setStyle() + this._setInnerHTML();
+        this.setEventHandler();
     }
 
     initAttributes() {
@@ -55,6 +56,16 @@ class MenuItem extends HTMLElement {
             <img src="${this.imgSrc}"></img>
             <span>${this.itemName}</span>
         </a>`;
+    }
+
+    setEventHandler() {
+        /* 
+            a 태그 적용에도 간혹 url에 반영이 안될 떄가 있어 다음 코드를 추가함.
+            location.hash : url의 fragment(# 달린 거)를 읽어오거나 쓸 수 있는 프로퍼티.
+        */
+        this.addEventListener('click', () => {
+            location.hash = `#${helper.extractFileName(this.imgSrc)}`;
+        });
     }
 }
 
