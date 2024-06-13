@@ -1,7 +1,10 @@
+import * as helper from '../../helper.js';
+
 class CalendarTitle extends HTMLElement {
-    connectedCallback() {
+    async connectedCallback() {
         this._initAttr();
-        this.innerHTML = this.combineStyleAndHTML();
+        this.innerHTML = await this.combineStyleAndHTML();
+        this.setTitle();
     }
 
     _initAttr() {
@@ -11,137 +14,59 @@ class CalendarTitle extends HTMLElement {
         }
     }
 
-    _setStyle() {
-        return `<style>
-            @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0');
-            #calendar-title-container {
-                --default-bgcolor: #83B4FF;
-                --active-bgcolor: #3572EF;
-
-                display: flex;
-                justify-content: space-evenly;
-                align-items: center;
-                width: 100%;
-                height: 4em;
-                background-color: var(--default-bgcolor);
-            }
-            input[class="material-symbols-outlined"] {
-                border-width: 0;
-                width: 2em;
-                height: 100%;
-                background-color: #1A2130;
-                color: white;
-            }
-            input[class="material-symbols-outlined"]:hover {
-                cursor: pointer;
-            }
-            input[class="material-symbols-outlined"]:active {
-                background-color: var(--active-bgcolor);
-            }
-            #cld-title {
-                margin: 0 5em;
-            }
-            #buttons {
-                display: flex;
-                justify-content: space-evenly;
-                align-items: center;
-                width: 15em;
-            }
-            #buttons > input[value="오늘"] {
-                background-color: #83B4FF;
-                border: 1px solid white;
-                border-radius: 0.5em;
-                font-size: 0.9em;
-                padding: 1em;
-            }
-            #buttons > input[value="오늘"]:hover {
-                cursor: pointer;
-            }
-            #buttons > input[value="오늘"]:active {
-                background-color: var(--active-bgcolor);
-            }
-        </style>`;
+    async _setStyle() {
+        return `<style>${await fetch('/js/table-page/calendar/calendar-title.css').then(res => res.text())}</style>`;
     }
 
-    _setInnerHTML() {
-        return `<div id="calendar-title-container">
-            <div id="cld-title">
-                <h3>${this.calendarTitle}</h3>
-            </div>
-            <div id="buttons">
-                <input type="button" value="chevron_left" class="material-symbols-outlined">
-                <input type="button" value="오늘">
-                <input type="button" value="chevron_right" class="material-symbols-outlined">
-            </div>
-        </div>`;
+    async _setInnerHTML() {
+        return await fetch('/js/table-page/calendar/calendar-title.html').then(res => res.text());
     }
 
-    combineStyleAndHTML() {
-        return this._setStyle() + this._setInnerHTML();
+    async combineStyleAndHTML() {
+        return await this._setStyle() + await this._setInnerHTML();
+    }
+
+    setTitle() {
+        this.querySelector('#cld-title > h3').innerHTML = this.calendarTitle;
     }
 }
 
 class Calendar extends HTMLElement {
-    connectedCallback() {
+    async connectedCallback() {
         this.todayDate = new Date();
         this.currentDate = new Date(); // 현재 달력 화면에 보여지고 있는 연-월. 오늘 날짜란 보장이 없다. 
-        this.attachShadow({mode: 'open'}).innerHTML = this.combineStyleAndHTML();
-        this._initElementVars();
-        this.setGrid();
-        this.showCalendar(this.currentDate);
-        this.setEventHandler();
+        this.attachShadow({mode: 'open'}).innerHTML = await this.combineStyleAndHTML();
+        /*
+        let mutationObserver = new MutationObserver((mutationRecord, observer) => {
+            this._initElementVars();
+            this.setGrid();
+            this.showCalendar(this.currentDate);
+            this.setEventHandler();
+            observer.disconnect();
+        });
+        mutationObserver.observe(this.shadowRoot.querySelector('calendar-title'), {childList: true});
+        */
+        helper.waitForRenderingAndExecuteFunctions(
+            this.shadowRoot.querySelector('calendar-title'),
+            [
+                [this._initElementVars.bind(this)],
+                [this.setGrid.bind(this)],
+                [this.showCalendar.bind(this, this.currentDate)],
+                [this.setEventHandler.bind(this)],
+            ]
+        );
     }
 
-    _setStyle() {
-        return `<style>
-            :host {
-                --default-bgcolor: #A7E6FF;
-                --today-bgcolor: #3572EF;
-
-                width: 100%;
-                background-color: var(--default-bgcolor);
-            }
-            #calendar-grid {
-                display: grid;
-                grid-template-columns: repeat(7, 1fr);
-                grid-template-columns: repeat(7, 1fr);
-                gap: 0.3em 0.3em;
-                margin-top: 0.5em;
-            }
-            .cell {
-                border: 1px groove grey;
-                border-radius: 0.4em;
-                height: 5em;
-                padding: 0.5em;
-                overflow: hidden;
-            }
-            .cell > ul {
-                list-style: none;
-                padding: 0;
-                margin: 0;
-            }
-            .weekday {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                height: 2em;
-            }
-            .saturday {
-                color: blue;
-            }
-            .sunday {
-                color: red;
-            }
-        </style>`;
+    async _setStyle() {
+        return `<style>${await fetch('/js/table-page/calendar/calendar.css').then(res => res.text())}</style>`;
     }
 
-    _setInnerHTML() {
-        return `<calendar-title></calendar-title>
-        <div id="calendar-grid"></div>`;
+    async _setInnerHTML() {
+        return await fetch('/js/table-page/calendar/calendar.html').then(res => res.text());
     }
 
-    combineStyleAndHTML() {
-        return this._setStyle() + this._setInnerHTML();
+    async combineStyleAndHTML() {
+        return await this._setStyle() + await this._setInnerHTML();
     }
 
     _initElementVars() {
@@ -149,7 +74,7 @@ class Calendar extends HTMLElement {
         this.calendarTitle = this.shadowRoot.querySelector('#cld-title > h3');
         this.btnLeft = this.shadowRoot.querySelector('#buttons > input[value="chevron_left"]');
         this.btnRight = this.shadowRoot.querySelector('#buttons > input[value="chevron_right"]');
-        this.btnToday = this.shadowRoot.querySelector('#buttons > input[value="오늘"]')
+        this.btnToday = this.shadowRoot.querySelector('#buttons > input[value="오늘"]');
     }
 
     setGrid() {

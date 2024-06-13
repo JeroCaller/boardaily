@@ -1,0 +1,47 @@
+<div id="age-input">
+    <labeled-input 
+    for="year" 
+    input-type="number" 
+    label-text="연도" 
+    placeholder="ex) 1990"
+    min="0"></labeled-input>
+    <labeled-input 
+    for="month" 
+    input-type="number" 
+    label-text="월" 
+    placeholder="ex) 07"
+    min="0"
+    max="12"></labeled-input>
+    <labeled-input 
+    for="day" 
+    input-type="number" 
+    label-text="일" 
+    placeholder="ex) 09"
+    min="0"
+    max="31"></labeled-input>
+    <input type="button" value="생년월일 입력" id="birth-date">
+</div>
+<div id="current-date">
+    <span id="current-date-label">현재 날짜: </span>
+    <span id="current-date-result"></span>
+</div>
+<section id="message"></section>
+<div id="age-result-container">
+    <div id="age-international">
+        <span class="label">만 나이</span>
+        <p class="result"></p>
+    </div>
+    <div id="age-this-year">
+        <span class="label">연 나이</span>
+        <p class="result"></p>
+    </div>
+    <div id="age-korean">
+        <span class="label">한국식 나이</span>
+        <p class="result"></p>
+    </div>
+</div>
+<section id="explain">
+    <ul>
+        <li>생년월일의 연도, 월, 일을 모두 입력해주세요.</li>
+    </ul>
+</section>

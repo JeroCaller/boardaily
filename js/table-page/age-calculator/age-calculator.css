@@ -1,0 +1,57 @@
+:host > * {
+    margin-bottom: 3em;
+}
+#age-input {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #6295A2;
+    padding: 1em;
+}
+#age-input > labeled-input {
+    margin-right: 1em;
+}
+input[id="birth-date"] {
+    font-size: 1em;
+    padding: 1em;
+    background-color: #B3E2A7;
+    border-width: 0;
+    border-radius: 0.4em;
+    cursor: pointer;
+}
+input[id="birth-date"]:hover {
+    background-color: #B3E2A799;
+}
+input[id="birth-date"]:active {
+    background-color: #538392;
+}
+#current-date, #message, #explain {
+    width: 100%;
+    padding: 1em;
+    box-sizing: border-box;
+    border: 1px solid black;
+    background-color: #D8EFD3;
+}
+#current-date, #message {
+    font-size: 1.5em;
+    text-align: center;
+    margin-bottom: 2em;
+}
+#message{
+    font-size: 1em;
+}
+#age-result-container > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#age-result-container > div > .label {
+    background-color: #80B9AD;
+    padding: 1em;
+}
+#age-result-container > div > .result {
+    width: 10em;
+    padding: 1em;
+    background-color: #B3E2A7;
+    text-align: center;
+}

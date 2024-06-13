@@ -1,7 +1,7 @@
-import {createSideMenu} from './table-page/side-menu.js';
-import {createCalcElement} from './table-page/calculator.js';
-import { createAgeCalcElement } from './table-page/age-calculator.js';
-import { createCalendarElement } from './table-page/calendar.js';
+import { createSideMenu } from './table-page/side-menu.js';
+import { createCalcElement } from './table-page/calculator/calculator.js';
+import { createAgeCalcElement } from './table-page/age-calculator/age-calculator.js';
+import { createCalendarElement } from './table-page/calendar/calendar.js';
 import * as helper from './helper.js';
 
 async function constructMenu() {

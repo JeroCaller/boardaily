@@ -1,0 +1,38 @@
+:host {
+    --default-bgcolor: #A7E6FF;
+    --today-bgcolor: #3572EF;
+
+    width: 100%;
+    background-color: var(--default-bgcolor);
+}
+#calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0.3em 0.3em;
+    margin-top: 0.5em;
+}
+.cell {
+    border: 1px groove grey;
+    border-radius: 0.4em;
+    height: 5em;
+    padding: 0.5em;
+    overflow: hidden;
+}
+.cell > ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.weekday {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 2em;
+}
+.saturday {
+    color: blue;
+}
+.sunday {
+    color: red;
+}

@@ -37,59 +37,16 @@ class CalcButton extends HTMLElement {
 class Calculator extends HTMLElement {
     displayFontSize = '2em';
 
-    connectedCallback() {
-        this.attachShadow({mode: 'open'}).innerHTML = this.combineStyleAndHTML();
+    async connectedCallback() {
+        this.attachShadow({mode: 'open'}).innerHTML = await this.combineStyleAndHTML();
         this._initElementVars();
         this._setEventHandlers();
         this._setKeyboardEventHandler()
     }
 
-    _setStyle() {
-        return `<style>
-            @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0');
-            :host {
-                --button-size: 2.5em;
-                --button-font-size: 2em;
-                --gap-column: 0.2em;
-                --button-column-number: 4;
-                
-                display: grid;
-                grid-template-columns: repeat(var(--button-column-number), calc(var(--button-size) * 2));
-                gap: 0.1em var(--gap-column);
-                border: 3px solid black;
-                width: calc(var(--button-size) * 2 * var(--button-column-number) + var(--gap-column) * calc(var(--button-column-number) - 1));
-                padding: 0.5em;
-            }
-            calc-button {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                width: var(--button-size);
-                height: var(--button-size);
-                border: 1px solid black;
-                background-color: #EADBC8;
-                font-size: var(--button-font-size);
-            }
-            calc-button:hover {
-                cursor: pointer;
-                background-color: #C7B7A3;
-            }
-            calc-displayer {
-                width: 100.6%;
-                height: 5.5em;
-                background-color: #B5C18E;
-                grid-column: 1/5;
-                border: 1px solid black;
-                padding: 0.1em;
-                box-sizing: border-box;
-            }
-            .material-symbols-outlined {
-                font-size: var(--button-font-size);
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
-        </style>`;
+    async _setStyle() {
+        let cssStr = await fetch('/js/table-page/calculator/calculator.css').then(res => res.text());
+        return `<style>${cssStr}</style>`;
     }
 
     _setInnerHTML() {
@@ -98,8 +55,10 @@ class Calculator extends HTMLElement {
         return iHTML;
     }
 
-    combineStyleAndHTML() {
-        return this._setStyle() + this._setInnerHTML();
+    async combineStyleAndHTML() {
+        let result = await this._setStyle();
+        result += this._setInnerHTML();
+        return result;
     }
 
     _constructKeyPads() {
