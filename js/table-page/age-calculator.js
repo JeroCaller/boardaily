@@ -259,12 +259,18 @@ class AgeCalculator extends HTMLElement {
             for (let i = 0; i < dateArr.length; i++) {
                 if(!dateArr[i]) {
                     this.messageDisp.innerText = notValidMsg[i];
+                    this.ageInterDisp.innerText = '';
+                    this.ageYearDisp.innerText = '';
+                    this.ageKoreanDisp.innerText = '';
                     return;
                 }
             }
 
             if (ageCalcLogic.convertStrToDate(dateArr) > this.todayDate) {
                 this.messageDisp.innerText = "생년월일은 현재 날짜보다 이전 날짜여야 합니다.";
+                this.ageInterDisp.innerText = '';
+                this.ageYearDisp.innerText = '';
+                this.ageKoreanDisp.innerText = '';
                 return;
             }
 
