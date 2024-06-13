@@ -21,8 +21,15 @@ async function constructMenu() {
  * @returns parentElement - 툴 자식 요소가 부착된 부모 요소.
  */
 function attachToolElement(currentPageName, parentElement) {
+    /*
     if (parentElement.firstChild) {
         parentElement.removeChild(parentElement.firstChild);
+    }*/
+
+    if (parentElement.hasChildNodes()) {
+        for (let i = 0; i < parentElement.childElementCount; i++) {
+            parentElement.removeChild(parentElement.children[i]);
+        }
     }
 
     let toolElement;
@@ -43,8 +50,37 @@ function attachToolElement(currentPageName, parentElement) {
     return parentElement;
 }
 
+/**
+ * 대상 요소 내부에 아무런 노드도 없을 경우 원하는 노드를 문자열로 대입하여 화면에 표시한다. 
+ * @param {string} iHTML 
+ * @param {HTMLElement} targetElement 
+ */
+function insertHTMLWhenEmpty(iHTML, targetElement) {
+    if (!targetElement.hasChildNodes()) {
+        targetElement.insertAdjacentHTML('beforeend', iHTML);
+    }
+}
+
+/**
+ * 대상 요소 내부에 자식 요소가 없을 경우, 조건(condition)에 따라 해당 요소에 
+ * 추가할 자식 요소를 결정하여 추가한다. 
+ * @param {*} condition - 조건문
+ * @param {HTMLElement} targetElement 
+ */
+function whenEmpty(condition, targetElement) {
+    if (condition) {
+        insertHTMLWhenEmpty(`<div>
+            <img src="/images/under-construction.png", alt="공사 중">
+            <h1 style="text-align:center">공사 중!</h1>
+        </div>`, targetElement);
+    } else {
+        insertHTMLWhenEmpty(`<h1><- 사이드 메뉴에서 원하시는 도구를 선택하세요.</h1>`, targetElement);
+    }
+}
+
 async function main() {
     const contentMain = document.getElementById('content-main');
+    const currentPageName = location.href.split('#')[1];
 
     let sideMenuElement = await constructMenu();
     sideMenuElement.addEventListener('click', event => {
@@ -54,10 +90,15 @@ async function main() {
         let toolName = helper.extractFileName(event.target.getAttribute('img-src'));
         attachToolElement(toolName, contentMain);
     });
+    sideMenuElement.addEventListener('click', () => {
+        whenEmpty(location.href.split('#')[1], contentMain);
+    });
 
     // 메인 페이지에서 특정 툴 페이지로 넘어갈 때.
-    const currentPageName = location.href.split('#')[1];
     attachToolElement(currentPageName, contentMain);
+
+    // 빈 페이지일 경우 화면에 출력할 기본 메시지.
+    whenEmpty(currentPageName, contentMain);
 }
 
 main();
