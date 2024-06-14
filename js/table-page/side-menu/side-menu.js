@@ -1,4 +1,4 @@
-import * as helper from '../helper.js';
+import * as helper from '../../helper.js';
 
 let slotNameForItems = "item-in-menu";
 
@@ -11,9 +11,9 @@ let slotNameForItems = "item-in-menu";
  * @example <menu-item slot="item-in-menu" img-src="이미지경로" item-name="아이템이름"></menu-item>
  */
 class MenuItem extends HTMLElement {
-    connectedCallback() {
+    async connectedCallback() {
         this.initAttributes();
-        this.attachShadow({mode: 'open'}).innerHTML = this._setStyle() + this._setInnerHTML();
+        this.attachShadow({mode: 'open'}).innerHTML = await this.combineStyleAndHTML();
         this.setEventHandler();
     }
 
@@ -22,33 +22,8 @@ class MenuItem extends HTMLElement {
         this.itemName = this.getAttribute('item-name');
     }
 
-    _setStyle() {
-        return `<style>
-            :host {
-                --item-content-height: 1.2em;
-                --add-size: 0.5em;
-                font-size: var(--item-content-height);
-                display: flex;
-                align-items: center;
-                height: 1em;
-                padding: 1em;
-            }
-            :host(:hover) {
-                background-color: #AD88C6;
-                cursor: pointer;
-            }
-            a {
-                width: 100%;
-                text-decoration: none;
-                color: #FFE6E6;
-                display: flex;
-                align-items: center;
-            }
-            a > img {
-                width: calc(var(--item-content-height) + var(--add-size));
-                margin-right: 1em;
-            }
-        </style>`;
+    async _setStyle() {
+        return `<style>${await fetch('/js/table-page/side-menu/menu-item.css').then(res => res.text())}</style>`;
     }
 
     _setInnerHTML() {
@@ -56,6 +31,10 @@ class MenuItem extends HTMLElement {
             <img src="${this.imgSrc}"></img>
             <span>${this.itemName}</span>
         </a>`;
+    }
+
+    async combineStyleAndHTML() {
+        return await this._setStyle() + this._setInnerHTML();
     }
 
     setEventHandler() {
@@ -79,9 +58,10 @@ class MenuItem extends HTMLElement {
     </side-menu>
  */
 class SideMenu extends HTMLElement {
-    connectedCallback() {
+    async connectedCallback() {
         this.getWidthAttr();
-        this.attachShadow({mode: 'open'}).innerHTML = this.combineStyleAndHTML();
+        this.attachShadow({mode: 'open'}).innerHTML = await this.combineStyleAndHTML();
+        this._setStyleByJS();
     }
 
     getWidthAttr() {
@@ -94,58 +74,44 @@ class SideMenu extends HTMLElement {
     /**
      * @description this.styleString에 <style> 태그를 이용하여 shadow DOm 스타일 지정
      */
-    _setStyle() {
-        this.styleString = `<style>
-            @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0');
-            :host {
-                --background-color: #7469B6;
-                --menu-icon-size: 2em;
-                display: flex;
-                width: ${this.width};
-                transform: translateX(calc(-${this.width} + var(--menu-icon-size)));
-            }
-            :host(:hover) {
-                transform: translateX(0);
-                transition: transform 0.5s;
-            }
-            :host(:not(:hover)) {
-                /* 해당 요소에서 마우스가 떠났을 때 메뉴 닫히는 모션이 부드럽게 진행되도록 함 */
-                transform: translateX(calc(-${this.width} + var(--menu-icon-size)));
-                transition: transform 0.5s;
-            }
-            #item-container {
-                width: ${this.width};
-                background-color: var(--background-color);
-            }
-            #menu-icon {
-                width: var(--menu-icon-size);
-                height: var(--menu-icon-size);
-                background-color: var(--background-color);
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
-            #menu-icon:hover {
-                cursor: pointer;
-            }
-        </style>`;
+    async _setStyle() {
+        return `<style>${await fetch('/js/table-page/side-menu/side-menu.css').then(res => res.text())}</style>`;
+    }
+
+    _setStyleByJS() {
+        this.style.width = this.width;
+        this.style.transform = `translateX(calc(-${this.width} + var(--menu-icon-size)))`;
+        this.shadowRoot.querySelector('#item-container').style.width = this.width;
+        this.addEventListener('mouseenter', () => {
+            this.style.transform = `translateX(0)`;
+            /*
+                transition 속성을 addEventListener 바깥에 선언하면 
+                메인 페이지에서 table.html으로 이동할 떄, 사이드 메뉴가 보여지는 상태에서 
+                왼쪽으로 사라지는 현상이 발생함. 원래는 처음부터 사이드 메뉴가 보여지지 않아야 함. 
+                해당 속성을 mouseenter, mouseleave 둘 중 한 이벤트에만 부착하는 경우, 사이드 메뉴 
+                움직임에 에니메이션 효과가 추가되지 않아 갑자기 움직이는 것 같은 현상이 발생함.
+                그래서 어쩔 수 없이 코드가 중복되어 보여도 해당 속성을 두 이벤트 모두에 일일이 집어넣을 수 밖에 없음.
+             */
+            this.style.transition = `transform 0.5s`;
+        });
+        this.addEventListener('mouseleave', () => {
+            this.style.transform = `translateX(calc(-${this.width} + var(--menu-icon-size)))`;
+            this.style.transition = `transform 0.5s`;
+        });
     }
 
     /**
      * @description this.htmlString에 이 메뉴 요소 내부의 HTML 코드 작성.
      */
     _setinnerHTML() {
-        this.htmlString = `
-        <div id="item-container">
+        return `<div id="item-container">
             <slot name="${slotNameForItems}"></slot>
         </div>
         <div id="menu-icon" class="material-symbols-outlined">menu</div>`;
     }
 
-    combineStyleAndHTML() {
-        this._setStyle();
-        this._setinnerHTML();
-        return this.styleString + this.htmlString;
+    async combineStyleAndHTML() {
+        return await this._setStyle() + this._setinnerHTML();
     }
 }
 

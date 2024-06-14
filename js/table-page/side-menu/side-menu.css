@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0');
+:host {
+    --background-color: #7469B6;
+    --menu-icon-size: 2em;
+    
+    display: flex;
+}
+/*
+:host(:hover) {
+    transform: translateX(0);
+    transition: transform 0.5s;
+}*/
+/*
+:host(:not(:hover)) {
+    해당 요소에서 마우스가 떠났을 때 메뉴 닫히는 모션이 부드럽게 진행되도록 함 
+    transition: transform 0.5s;
+}*/
+#item-container {
+    background-color: var(--background-color);
+}
+#menu-icon {
+    width: var(--menu-icon-size);
+    height: var(--menu-icon-size);
+    background-color: var(--background-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#menu-icon:hover {
+    cursor: pointer;
+}

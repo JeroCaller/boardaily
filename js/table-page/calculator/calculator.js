@@ -1,18 +1,31 @@
 import * as calcLogic from "./calculator-logic.js";
+import * as helper from '../../helper.js';
 
 class CalcDisplayer extends HTMLElement {
-    connectedCallback() {
-        this.innerHTML = `<style>
-            input {
-                width: 98%;
-                background-color: rgba(0, 0, 0, 0);
-                font-size: ${this.getAttribute('font-size')};
-            }
-        </style>
-        <div id="text-container">
+    async connectedCallback() {
+        this.innerHTML = await this.combineStyleAndHTML();
+        this.setStyleInJs();
+    }
+
+    async _setStyle() {
+        return `<style>${await fetch('/js/table-page/calculator/calculator-display.css').then(res => res.text())}</style>`;
+    }
+
+    setStyleInJs() {
+        this.querySelectorAll('input').forEach((element) => {
+            element.style.fontSize = this.getAttribute('font-size');
+        });
+    }
+
+    _setInnerHTML() {
+        return  `<div id="text-container">
             <input type="text" id="input-status" readonly>
             <input type="text" id="result" readonly>
-        </div>`;
+        </div>`
+    }
+
+    async combineStyleAndHTML() {
+        return await this._setStyle() + this._setInnerHTML();
     }
 }
 
@@ -39,9 +52,14 @@ class Calculator extends HTMLElement {
 
     async connectedCallback() {
         this.attachShadow({mode: 'open'}).innerHTML = await this.combineStyleAndHTML();
-        this._initElementVars();
-        this._setEventHandlers();
-        this._setKeyboardEventHandler()
+        helper.waitForRenderingAndExecuteFunctions(
+            this.shadowRoot.querySelector('calc-displayer'),
+            [
+                [this._initElementVars.bind(this)],
+                [this._setEventHandlers.bind(this)],
+                [this._setKeyboardEventHandler.bind(this)],
+            ]
+        );
     }
 
     async _setStyle() {

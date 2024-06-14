@@ -1,0 +1,24 @@
+:host {
+    --item-content-height: 1.2em;
+    --add-size: 0.5em;
+    font-size: var(--item-content-height);
+    display: flex;
+    align-items: center;
+    height: 1em;
+    padding: 1em;
+}
+:host(:hover) {
+    background-color: #AD88C6;
+    cursor: pointer;
+}
+a {
+    width: 100%;
+    text-decoration: none;
+    color: #FFE6E6;
+    display: flex;
+    align-items: center;
+}
+a > img {
+    width: calc(var(--item-content-height) + var(--add-size));
+    margin-right: 1em;
+}
