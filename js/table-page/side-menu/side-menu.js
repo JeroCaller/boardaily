@@ -11,9 +11,9 @@ let slotNameForItems = "item-in-menu";
  * @example <menu-item slot="item-in-menu" img-src="이미지경로" item-name="아이템이름"></menu-item>
  */
 class MenuItem extends HTMLElement {
-    async connectedCallback() {
+    connectedCallback() {
         this.initAttributes();
-        this.attachShadow({mode: 'open'}).innerHTML = await this.combineStyleAndHTML();
+        this.attachShadow({mode: 'open'}).innerHTML = this.combineStyleAndHTML();
         this.setEventHandler();
     }
 
@@ -22,8 +22,8 @@ class MenuItem extends HTMLElement {
         this.itemName = this.getAttribute('item-name');
     }
 
-    async _setStyle() {
-        return `<style>${await fetch('/js/table-page/side-menu/menu-item.css').then(res => res.text())}</style>`;
+    _setStyle() {
+        return '<link rel="stylesheet" href="/js/table-page/side-menu/menu-item.css">';
     }
 
     _setInnerHTML() {
@@ -33,8 +33,8 @@ class MenuItem extends HTMLElement {
         </a>`;
     }
 
-    async combineStyleAndHTML() {
-        return await this._setStyle() + this._setInnerHTML();
+    combineStyleAndHTML() {
+        return this._setStyle() + this._setInnerHTML();
     }
 
     setEventHandler() {
@@ -58,9 +58,9 @@ class MenuItem extends HTMLElement {
     </side-menu>
  */
 class SideMenu extends HTMLElement {
-    async connectedCallback() {
+    connectedCallback() {
         this.getWidthAttr();
-        this.attachShadow({mode: 'open'}).innerHTML = await this.combineStyleAndHTML();
+        this.attachShadow({mode: 'open'}).innerHTML = this.combineStyleAndHTML();
         this._setStyleByJS();
     }
 
@@ -74,8 +74,8 @@ class SideMenu extends HTMLElement {
     /**
      * @description this.styleString에 <style> 태그를 이용하여 shadow DOm 스타일 지정
      */
-    async _setStyle() {
-        return `<style>${await fetch('/js/table-page/side-menu/side-menu.css').then(res => res.text())}</style>`;
+    _setStyle() {
+        return '<link rel="stylesheet" href="/js/table-page/side-menu/side-menu.css">';
     }
 
     _setStyleByJS() {
@@ -110,8 +110,8 @@ class SideMenu extends HTMLElement {
         <div id="menu-icon" class="material-symbols-outlined">menu</div>`;
     }
 
-    async combineStyleAndHTML() {
-        return await this._setStyle() + this._setinnerHTML();
+    combineStyleAndHTML() {
+        return this._setStyle() + this._setinnerHTML();
     }
 }
 

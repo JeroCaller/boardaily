@@ -7,14 +7,14 @@ import * as ageCalcLogic from './age-calculator-logic.js';
  * @example <labeled-input for="id-input" input-type="text" label-text="input your id"></labeled-input>
  */
 class LabeledInput extends HTMLElement {
-    async connectedCallback() {
+    connectedCallback() {
         this._initAttr();
-        this.innerHTML = await this.combineStyleAndInnerHTML();
+        this.innerHTML = this.combineStyleAndInnerHTML();
         this.setExtraAttributes();
     }
 
-    async _setStyle() {
-        return `<style>${await fetch('/js/table-page/age-calculator/labeled-input.css').then(res => res.text())}</style>`;
+    _setStyle() {
+        return `<link rel="stylesheet" href="/js/table-page/age-calculator/labeled-input.css">`;
     }
 
     _setInnerHTML() {
@@ -24,8 +24,8 @@ class LabeledInput extends HTMLElement {
         </div>`;
     }
 
-    async combineStyleAndInnerHTML() {
-        return await this._setStyle() + this._setInnerHTML();
+    combineStyleAndInnerHTML() {
+        return this._setStyle() + this._setInnerHTML();
     }
 
     _initAttr() {
@@ -69,8 +69,8 @@ class AgeCalculator extends HTMLElement {
         this._setKeyboardEventHandler();
     }
 
-    async _setStyle() {
-        return `<style>${await fetch('/js/table-page/age-calculator/age-calculator.css').then(res => res.text())}</style>`;
+    _setStyle() {
+        return '<link rel="stylesheet" href="/js/table-page/age-calculator/age-calculator.css">';
     }
 
     async _setInnerHTML() {
@@ -78,7 +78,7 @@ class AgeCalculator extends HTMLElement {
     }
 
     async combineStyleAndInnerHTML() {
-        return await this._setStyle() + await this._setInnerHTML();
+        return this._setStyle() + await this._setInnerHTML();
     }
 
     _initElementVars() {

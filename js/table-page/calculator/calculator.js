@@ -1,14 +1,13 @@
 import * as calcLogic from "./calculator-logic.js";
-import * as helper from '../../helper.js';
 
 class CalcDisplayer extends HTMLElement {
-    async connectedCallback() {
-        this.innerHTML = await this.combineStyleAndHTML();
+    connectedCallback() {
+        this.innerHTML = this.combineStyleAndHTML();
         this.setStyleInJs();
     }
 
-    async _setStyle() {
-        return `<style>${await fetch('/js/table-page/calculator/calculator-display.css').then(res => res.text())}</style>`;
+    _setStyle() {
+        return `<link rel="stylesheet" href="/js/table-page/calculator/calculator-display.css">`;
     }
 
     setStyleInJs() {
@@ -24,8 +23,8 @@ class CalcDisplayer extends HTMLElement {
         </div>`
     }
 
-    async combineStyleAndHTML() {
-        return await this._setStyle() + this._setInnerHTML();
+    combineStyleAndHTML() {
+        return this._setStyle() + this._setInnerHTML();
     }
 }
 
@@ -50,21 +49,15 @@ class CalcButton extends HTMLElement {
 class Calculator extends HTMLElement {
     displayFontSize = '2em';
 
-    async connectedCallback() {
-        this.attachShadow({mode: 'open'}).innerHTML = await this.combineStyleAndHTML();
-        helper.waitForRenderingAndExecuteFunctions(
-            this.shadowRoot.querySelector('calc-displayer'),
-            [
-                [this._initElementVars.bind(this)],
-                [this._setEventHandlers.bind(this)],
-                [this._setKeyboardEventHandler.bind(this)],
-            ]
-        );
+    connectedCallback() {
+        this.attachShadow({mode: 'open'}).innerHTML = this.combineStyleAndHTML();
+        this._initElementVars();
+        this._setEventHandlers();
+        this._setKeyboardEventHandler();
     }
 
-    async _setStyle() {
-        let cssStr = await fetch('/js/table-page/calculator/calculator.css').then(res => res.text());
-        return `<style>${cssStr}</style>`;
+    _setStyle() {
+        return `<link rel="stylesheet" href="/js/table-page/calculator/calculator.css">`;
     }
 
     _setInnerHTML() {
@@ -73,10 +66,8 @@ class Calculator extends HTMLElement {
         return iHTML;
     }
 
-    async combineStyleAndHTML() {
-        let result = await this._setStyle();
-        result += this._setInnerHTML();
-        return result;
+    combineStyleAndHTML() {
+        return this._setStyle() + this._setInnerHTML();
     }
 
     _constructKeyPads() {
@@ -148,7 +139,10 @@ class Calculator extends HTMLElement {
                             맨 오른쪽에 오도록 위치시킨다. 이 경우, 텍스트의 왼쪽에 위치한 문자들은 디스플레이에서 
                             잘려 보이지 않는다. 다만 이 경우, 키보드의 왼쪽 화살표 키를 누르면 잘린 문자들을 다시 볼 수 있다. 
                         */
-                        this.calcInputDisp.setSelectionRange(this.calcInputDisp.value.length, this.calcInputDisp.value.length);
+                        this.calcInputDisp.setSelectionRange(
+                            this.calcInputDisp.value.length, 
+                            this.calcInputDisp.value.length
+                        );
                         this.calcInputDisp.scrollLeft = this.calcInputDisp.value.length * parseInt(this.displayFontSize[0]) * 16;
                     });
             }

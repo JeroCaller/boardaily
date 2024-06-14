@@ -14,8 +14,9 @@ class CalendarTitle extends HTMLElement {
         }
     }
 
-    async _setStyle() {
-        return `<style>${await fetch('/js/table-page/calendar/calendar-title.css').then(res => res.text())}</style>`;
+    _setStyle() {
+        return `<link rel="stylesheet" href="/js/table-page/calendar/calendar-title.css">`;
+        //return `<style>${await fetch('/js/table-page/calendar/calendar-title.css').then(res => res.text())}</style>`;
     }
 
     async _setInnerHTML() {
@@ -23,7 +24,7 @@ class CalendarTitle extends HTMLElement {
     }
 
     async combineStyleAndHTML() {
-        return await this._setStyle() + await this._setInnerHTML();
+        return this._setStyle() + await this._setInnerHTML();
     }
 
     setTitle() {
@@ -56,9 +57,10 @@ class Calendar extends HTMLElement {
             ]
         );
     }
-
-    async _setStyle() {
-        return `<style>${await fetch('/js/table-page/calendar/calendar.css').then(res => res.text())}</style>`;
+    
+    _setStyle() {
+        return `<link rel="stylesheet" href="/js/table-page/calendar/calendar.css">`;
+        //return `<style>${await fetch('/js/table-page/calendar/calendar.css').then(res => res.text())}</style>`;
     }
 
     async _setInnerHTML() {
@@ -66,7 +68,7 @@ class Calendar extends HTMLElement {
     }
 
     async combineStyleAndHTML() {
-        return await this._setStyle() + await this._setInnerHTML();
+        return this._setStyle() + await this._setInnerHTML();
     }
 
     _initElementVars() {
