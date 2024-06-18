@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0');
+
+:host {
+    width: 90%;
+}
+#todo-config {
+    display: flex;
+    justify-content: space-between;
+}
+button {
+    cursor: pointer;
+    background-color: white;
+}
+ul {
+    width: 90%;
+    background-color: pink;
+    list-style-type: none;
+    padding: 1em;
+    width: 100%;
+    margin: 0;
+    box-sizing: border-box;
+}
