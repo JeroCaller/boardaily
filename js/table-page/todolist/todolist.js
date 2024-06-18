@@ -1,6 +1,6 @@
 import * as helper from '../../helper.js';
 
-const TODO_ITEM_LIMIT = 20;
+const TODO_ITEM_LIMIT = 10;
 
 // 테스트용
 function printLocalStorage() {
@@ -85,6 +85,7 @@ class TodoItem extends HTMLElement {
             localStorage.setItem(this.getAttribute('id'), JSON.stringify(objLiteral, null, 2));
             //printLocalStorage();
         });
+
         /**
          * 체크 버튼 클릭 시 해당 상태를 로컬 스토리지에 저장한다. 
          */
@@ -188,7 +189,7 @@ class TodoList extends HTMLElement {
             return;
         }
 
-        // 일단 현재 화면 상에 존재하는 투두 아이템들을 모두 삭제한다.
+        // 현재 화면 상에 존재하는 투두 아이템들을 모두 삭제한다.
         for (let i = 0; i < this.ul.children.length; i++) {
             this.ul.removeChild(this.ul.children[i]);
         }
