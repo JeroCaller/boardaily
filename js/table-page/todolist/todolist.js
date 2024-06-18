@@ -1,38 +1,13 @@
 import * as helper from '../../helper.js';
+import * as uiLogic from './todolist-ui-logic.js';
 
 const TODO_ITEM_LIMIT = 10;
-
-// 테스트용
-function printLocalStorage() {
-    console.log('로컬 스토리지 현재 내역');
-    for (let i = 0; i < localStorage.length; i++) {
-        let key = localStorage.key(i);
-        console.log(`${key} : ${localStorage.getItem(key)}`);
-    }
-    console.log('로컬 스토리지 현재 내역 끝');
-}
-
-/**
- * 주어진 input[type="text"] 요소에 밑줄을 긋거나 취소한다. 
- * @param {boolean} isUnderline - 밑줄 추가 여부. true 시 밑줄이 추가되고, false 시 밑줄을 삭제한다. 
- * @param {HTMLElement} inputText - 밑줄 스타일 지정하고자 하는 input[type="text"] 요소
- * @returns {HTMLElement} - inputText - 작업이 완료된 text 타입의 input 요소
- */
-function underlineInputText(isUnderline, inputText) {
-    if (isUnderline) {
-        inputText.style.textDecoration = 'line-through';
-        inputText.style.color = 'grey';
-    } else {
-        inputText.style.textDecoration = 'none';
-        inputText.style.color = 'black';
-    }
-    return inputText;
-}
 
 class TodoItem extends HTMLElement {
     async connectedCallback() {
         this.innerHTML = await this.combineStyleAndHTML();
         this.getElements();
+        this.showTodoNum();
         this.setEventHandlers();
     }
 
@@ -52,6 +27,11 @@ class TodoItem extends HTMLElement {
         this.checkIcon = this.querySelector('.check-icon');
         this.inputText = this.querySelector('input[type="text"]');
         this.controlIcon = this.querySelector('.control');
+        this.todoNumLabel = this.querySelector('label');
+    }
+
+    showTodoNum() {
+        this.todoNumLabel.textContent = this.getAttribute('id').match(/\d+/)[0];
     }
 
     setEventHandlers() {
@@ -60,10 +40,10 @@ class TodoItem extends HTMLElement {
             if (event.target.innerText == "check_box_outline_blank") {
                 // 체크박스가 체크된 상황.
                 event.target.innerText = "check_box";
-                underlineInputText(true, this.inputText);
+                uiLogic.underlineInputText(true, this.inputText);
             } else if (event.target.innerText = "check_box") {
                 event.target.innerText = "check_box_outline_blank";
-                underlineInputText(false, this.inputText);
+                uiLogic.underlineInputText(false, this.inputText);
             }
         });
 
@@ -83,7 +63,7 @@ class TodoItem extends HTMLElement {
                 content: this.inputText.value
             };
             localStorage.setItem(this.getAttribute('id'), JSON.stringify(objLiteral, null, 2));
-            //printLocalStorage();
+            //uiLogic.printLocalStorage();
         });
 
         /**
@@ -99,7 +79,7 @@ class TodoItem extends HTMLElement {
             targetValue.state = this.checkIcon.innerText;
             localStorage.setItem(this.getAttribute('id'), JSON.stringify(targetValue, null, 2));
 
-            //printLocalStorage();
+            //uiLogic.printLocalStorage();
         });
     }
 }
@@ -179,14 +159,15 @@ class TodoList extends HTMLElement {
     /**
      * 처음 투두 리스트 화면 진입 시 기존의 local storage 내 저장된 데이터가 있다면 
      * 이를 불러와 투두 아이템에 채워 화면에 출력한다. 
-     * @returns 
+     * @returns {boolean} - true: 로컬 스토리지에 todo item 데이터가 있는 경우.
+     * false: 로컬 스토리지에 todo item 데이터가 하나도 없는 경우.
      */
     initTodoFromLocalStorage() {
         //localStorage.clear();
 
         let todoData = this._getDataFromLocalStorage();
         if (!todoData) {
-            return;
+            return false;
         }
 
         // 현재 화면 상에 존재하는 투두 아이템들을 모두 삭제한다.
@@ -209,16 +190,20 @@ class TodoList extends HTMLElement {
             for (let i = 0; i < this.ul.children.length; i++) {
                 let checkIcon = this.ul.children[i].querySelector('button[class~=check-icon]');
                 let inputText = this.ul.children[i].querySelector('input[type="text"]');
+                let todoLabel = this.ul.children[i].querySelector('label');
                 checkIcon.innerText = todoData[this.ul.children[i].id].state;
                 inputText.value = todoData[this.ul.children[i].id].content;
-                underlineInputText(
+                todoLabel.textContent = this.ul.children[i].id.match(/\d+/)[0];
+                uiLogic.underlineInputText(
                     checkIcon.innerText == 'check_box',
                     inputText
                 );
             }
         }, this.ul.lastChild);
+
+        return true;
         
-        //printLocalStorage();
+        //uiLogic.printLocalStorage();
     }
 
     /**
@@ -246,6 +231,12 @@ class TodoList extends HTMLElement {
             }
         }
         return null;
+    }
+
+    showTodoNums() {
+        for (let i = 0; i < this.ul.children.length; i++) {
+            this.ul.children[i].querySelector('label').textContent = this.ul.children[i].id.match(/\d+/)[0];
+        }
     }
 
     addTodoItem() {
@@ -277,6 +268,7 @@ class TodoList extends HTMLElement {
         }
 
         this._reassignIdToLocalStorage();
+        this.showTodoNums();
     }
 
     /**
@@ -298,7 +290,7 @@ class TodoList extends HTMLElement {
             localStorage.removeItem(k);
         }
 
-        //printLocalStorage();
+        //uiLogic.printLocalStorage();
     }
 
     /**

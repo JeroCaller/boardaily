@@ -6,6 +6,10 @@ li {
     box-sizing: border-box;
     display: flex;
 }
+li > label {
+    font-size: 1.5em;
+    margin: auto 0.5em;
+}
 li > input {
     width: 100%;
     height: 1em;
@@ -15,7 +19,6 @@ li > input {
 }
 li > .check-icon {
     margin: auto 0;
-    margin-right: 0.3em;
     cursor: pointer;
     font-size: 2em;
     border: none;
