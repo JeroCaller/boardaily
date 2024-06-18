@@ -1,7 +1,10 @@
 import * as helper from '../../helper.js';
 import * as uiLogic from './todolist-ui-logic.js';
+import { customEventsInfo } from '../../custom-events.js';
 
 const TODO_ITEM_LIMIT = 10;
+let currentTabStorageEventInfo = customEventsInfo["current-tab-storage"];
+currentTabStorageEventInfo.eventOption = {bubbles: true};
 
 class TodoItem extends HTMLElement {
     async connectedCallback() {
@@ -63,6 +66,8 @@ class TodoItem extends HTMLElement {
                 content: this.inputText.value
             };
             localStorage.setItem(this.getAttribute('id'), JSON.stringify(objLiteral, null, 2));
+            currentTabStorageEventInfo.eventDetail = {key: this.getAttribute('id')};
+            this.dispatchEvent(currentTabStorageEventInfo.getEventObj());
             //uiLogic.printLocalStorage();
         });
 
@@ -78,6 +83,8 @@ class TodoItem extends HTMLElement {
             let targetValue = JSON.parse(targetKey);
             targetValue.state = this.checkIcon.innerText;
             localStorage.setItem(this.getAttribute('id'), JSON.stringify(targetValue, null, 2));
+            currentTabStorageEventInfo.eventDetail = {key: this.getAttribute('id')};
+            this.dispatchEvent(currentTabStorageEventInfo.getEventObj());
 
             //uiLogic.printLocalStorage();
         });
@@ -89,6 +96,7 @@ class TodoList extends HTMLElement {
         this.attachShadow({mode: 'open'}).innerHTML = await this.combineStyleAndHTML();
         this.getElement();
         this.initTodoFromLocalStorage();
+        this.getSaveDateAndShow();
         this.setEventHandlers();
     }
 
@@ -106,6 +114,14 @@ class TodoList extends HTMLElement {
 
     getElement() {
         this.ul = this.shadowRoot.querySelector('ul');
+        this.saveDateInfo = this.shadowRoot.querySelector('#date-info');
+    }
+
+    getSaveDateAndShow() {
+        if (!'todo-item-date' in localStorage) {
+            return;
+        }
+        this.saveDateInfo.textContent = localStorage.getItem('todo-item-date');
     }
 
     _getDataFromLocalStorage() {
@@ -259,7 +275,12 @@ class TodoList extends HTMLElement {
 
     deleteTodoItem(eventTarget) {
         let targetTodoItem = eventTarget.parentNode.parentNode;
-        localStorage.removeItem(targetTodoItem.id);
+        if (targetTodoItem.id in localStorage) {
+            currentTabStorageEventInfo.eventDetail = {key: targetTodoItem.id};
+            localStorage.removeItem(targetTodoItem.id);
+            this.shadowRoot.dispatchEvent(currentTabStorageEventInfo.getEventObj());
+            localStorage.setItem('todo-item-date', new Date().toLocaleString());
+        }
         this.ul.removeChild(targetTodoItem);
 
         // id 넘버 재할당.
@@ -289,7 +310,9 @@ class TodoList extends HTMLElement {
         for (let k of keys) {
             localStorage.removeItem(k);
         }
-
+        if (keys) {
+            localStorage.removeItem('todo-item-date');
+        }
         //uiLogic.printLocalStorage();
     }
 
@@ -314,9 +337,20 @@ class TodoList extends HTMLElement {
                     if (ok) {
                         this._deleteAllTodoItemsInLocalStorage();
                         this._delelteAllTodoItemsInUl();
+                        this.saveDateInfo.textContent = '';
                     }
                 }
             }
+        });
+        this.shadowRoot.addEventListener('current-tab-storage', event => {
+            try {
+                if(!event.detail.key.match(/todo-item-\d+/)[0]) {
+                    return;
+                }
+            } catch (err) {}
+            let today = new Date();
+            this.saveDateInfo.textContent = today.toLocaleString();
+            localStorage.setItem('todo-item-date', today.toLocaleString());
         });
     }
 }

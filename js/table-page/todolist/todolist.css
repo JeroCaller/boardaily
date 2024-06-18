@@ -3,6 +3,12 @@
 :host {
     width: 90%;
 }
+#info-display {
+    text-align: center;
+    background-color: #E8C5E5;
+    padding: 1em;
+    margin-bottom: 1em;
+}
 #todo-config {
     display: flex;
     justify-content: space-between;
