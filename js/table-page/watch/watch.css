@@ -1,0 +1,27 @@
+:host {
+    width: 100%;
+}
+#watch-config{
+    width: 100%;
+    background-color: #AAC4FF;
+}
+#hours {
+    width: 5em;
+    height: 3em;
+    background-color: #D2DAFF;
+    border-style: none;
+    cursor: pointer;
+}
+#hours:hover {
+    background-color: #3AA6B9;
+}
+#watch-display {
+    width: 100%;
+    background-color: #B1B2FF;
+}
+p {
+    padding: 1em;
+    margin: 0;
+    text-align: center;
+    font-size: 3em;
+}

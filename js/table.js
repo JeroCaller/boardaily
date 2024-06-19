@@ -3,6 +3,7 @@ import { createCalcElement } from './table-page/calculator/calculator.js';
 import { createAgeCalcElement } from './table-page/age-calculator/age-calculator.js';
 import { createCalendarElement } from './table-page/calendar/calendar.js';
 import { createTodoListElement } from './table-page/todolist/todolist.js';
+import { createWatchElement } from './table-page/watch/watch.js';
 import * as helper from './helper.js';
 
 async function constructMenu() {
@@ -41,6 +42,9 @@ function attachToolElement(currentPageName, parentElement) {
             break;
         case "todolist":
             toolElement = createTodoListElement();
+            break;
+        case "watch":
+            toolElement = createWatchElement();
             break;
         case undefined:
             break;
