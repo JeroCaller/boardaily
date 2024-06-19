@@ -10,7 +10,7 @@ class TodoItem extends HTMLElement {
     async connectedCallback() {
         this.innerHTML = await this.combineStyleAndHTML();
         this.getElements();
-        this.showTodoNum();
+        this.showTodoId();
         this.setEventHandlers();
     }
 
@@ -33,7 +33,7 @@ class TodoItem extends HTMLElement {
         this.todoNumLabel = this.querySelector('label');
     }
 
-    showTodoNum() {
+    showTodoId() {
         this.todoNumLabel.textContent = this.getAttribute('id').match(/\d+/)[0];
     }
 
@@ -95,8 +95,10 @@ class TodoList extends HTMLElement {
     async connectedCallback() {
         this.attachShadow({mode: 'open'}).innerHTML = await this.combineStyleAndHTML();
         this.getElement();
+        this.initVars();
         this.initTodoFromLocalStorage();
         this.getSaveDateAndShow();
+        this.showTodoNums();
         this.setEventHandlers();
     }
 
@@ -115,6 +117,15 @@ class TodoList extends HTMLElement {
     getElement() {
         this.ul = this.shadowRoot.querySelector('ul');
         this.saveDateInfo = this.shadowRoot.querySelector('#date-info');
+    }
+
+    initVars() {
+        this.ulObserver = new MutationObserver(() => this.showTodoNums());
+    }
+
+    showTodoNums() {
+        this.shadowRoot
+            .querySelector('#todo-nums').textContent = `${this.ul.children.length} / ${TODO_ITEM_LIMIT}`;
     }
 
     getSaveDateAndShow() {
@@ -249,7 +260,7 @@ class TodoList extends HTMLElement {
         return null;
     }
 
-    showTodoNums() {
+    showTodoIds() {
         for (let i = 0; i < this.ul.children.length; i++) {
             this.ul.children[i].querySelector('label').textContent = this.ul.children[i].id.match(/\d+/)[0];
         }
@@ -289,7 +300,7 @@ class TodoList extends HTMLElement {
         }
 
         this._reassignIdToLocalStorage();
-        this.showTodoNums();
+        this.showTodoIds();
     }
 
     /**
@@ -352,6 +363,7 @@ class TodoList extends HTMLElement {
             this.saveDateInfo.textContent = today.toLocaleString();
             localStorage.setItem('todo-item-date', today.toLocaleString());
         });
+        this.ulObserver.observe(this.ul, {childList: true});
     }
 }
 
