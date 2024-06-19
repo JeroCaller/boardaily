@@ -9,7 +9,7 @@ class YourCustomElement extends HTMLElement {
     }
 
     _setStyle() {
-        return `<link rel="style" href="custom-element.css">`;
+        return `<link rel="stylesheet" href="custom-element.css">`;
     }
 
     async _setInnerHTML() {
