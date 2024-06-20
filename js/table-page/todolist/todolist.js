@@ -193,7 +193,7 @@ class TodoList extends HTMLElement {
         //localStorage.clear();
 
         let todoData = this._getDataFromLocalStorage();
-        if (!todoData) {
+        if (Object.keys(todoData).length == 0) {
             return false;
         }
 
@@ -343,6 +343,10 @@ class TodoList extends HTMLElement {
                     this.addTodoItem();
                 } else if (event.target.attributes['class'].nodeValue.split(' ').indexOf('delete') != -1) {
                     this.deleteTodoItem(event.target);
+                    if (this.ul.children.length == 0) {
+                        localStorage.removeItem('todo-item-date');
+                        this.saveDateInfo.textContent = '';
+                    }
                 } else if (event.target.attributes['class'].nodeValue.split(' ').indexOf('delete-all') != -1) {
                     let ok = confirm(`정말로 모든 투두 아이템들을 삭제하시겠습니까? 해당되는 모든 데이터가 영구히 삭제됩니다.`);
                     if (ok) {
