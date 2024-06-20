@@ -1,4 +1,4 @@
-import * as calcLogic from '../js/table-page/calculator-logic.js';
+import * as calcLogic from '../js/table-page/calculator/calculator-logic.js';
 import * as testTools from './my-test-tool.js';
 
 function testCalcExp(expStr, expected, silence) {
