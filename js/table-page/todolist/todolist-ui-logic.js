@@ -1,13 +1,3 @@
-// 테스트용
-export function printLocalStorage() {
-    console.log('로컬 스토리지 현재 내역');
-    for (let i = 0; i < localStorage.length; i++) {
-        let key = localStorage.key(i);
-        console.log(`${key} : ${localStorage.getItem(key)}`);
-    }
-    console.log('로컬 스토리지 현재 내역 끝');
-}
-
 /**
  * 주어진 input[type="text"] 요소에 밑줄을 긋거나 취소한다. 
  * @param {boolean} isUnderline - 밑줄 추가 여부. true 시 밑줄이 추가되고, false 시 밑줄을 삭제한다. 

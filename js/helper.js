@@ -63,3 +63,13 @@ export function waitForRenderingAndExecuteFunctions(targetNode, funcArr) {
     });
     mutationOb.observe(targetNode, {childList: true});
 }
+
+// 테스트용
+export function printLocalStorage() {
+    console.log('로컬 스토리지 현재 내역');
+    for (let i = 0; i < localStorage.length; i++) {
+        let key = localStorage.key(i);
+        console.log(`${key} : ${localStorage.getItem(key)}`);
+    }
+    console.log('로컬 스토리지 현재 내역 끝');
+}
