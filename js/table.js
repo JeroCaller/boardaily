@@ -4,6 +4,7 @@ import { createAgeCalcElement } from './table-page/age-calculator/age-calculator
 import { createCalendarElement } from './table-page/calendar/calendar.js';
 import { createTodoListElement } from './table-page/todolist/todolist.js';
 import { createWatchElement } from './table-page/watch/watch.js';
+import { createDateCalculatorElement } from './table-page/date-calculator/date-calculator.js';
 import * as helper from './helper.js';
 
 async function constructMenu() {
@@ -45,6 +46,9 @@ function attachToolElement(currentPageName, parentElement) {
             break;
         case "watch":
             toolElement = createWatchElement();
+            break;
+        case "date-calculator":
+            toolElement = createDateCalculatorElement();
             break;
         case undefined:
             break;

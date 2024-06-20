@@ -25,8 +25,8 @@
         "hover-bgcolor": "#799351"
     },
     {
-        "name": "날씨",
-        "img-src": "/images/weather.png",
+        "name": "날짜 계산기",
+        "img-src": "/images/date-calculator.png",
         "hover-bgcolor": "#5AB2FF"
     }
 ]
