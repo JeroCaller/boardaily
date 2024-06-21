@@ -1,0 +1,31 @@
+:host {
+    --tab-btn-bgcolor: #B4846C;
+    --tab-btn-hover-bgcolor: #EDCDBB;
+    --tab-display-bgcolor: #E5B299;
+    --tab-btn-clicked-bgcolor: #E5B299;
+    
+    width: 100%;
+}
+#tab-container {
+    width: 100%;
+}
+::slotted(*) {
+    display: none;
+}
+#tab-btn-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+.tab-button {
+    background-color: var(--tab-btn-bgcolor);
+    padding: 1em;
+    cursor: pointer;
+    border-radius: 0.5em 0.5em 0 0;
+}
+#tab-display {
+    width: 100%;
+    height: 30em;
+    background-color: var(--tab-display-bgcolor);
+    padding: 1em;
+}
