@@ -1,5 +1,3 @@
-import { customEventsInfo } from "../custom-events.js";
-
 /**
  * @attribute z-index
  * @example 
@@ -15,11 +13,11 @@ class ConfigModal extends HTMLElement {
     }
 
     _setStyle() {
-        return `<link rel="stylesheet" href="/js/config-ui/config-modal.css">`;
+        return `<link rel="stylesheet" href="/js/config-ui/config-modal/config-modal.css">`;
     }
 
     async _setInnerHTML() {
-        return await fetch('/js/config-ui/config-modal.html').then(res => res.text());
+        return await fetch('/js/config-ui/config-modal/config-modal.html').then(res => res.text());
     }
 
     async combineStyleAndHTML() {

@@ -40,5 +40,7 @@ class CustomEventInfo {
 
 export const customEventsInfo = {
     "empty-document": new CustomEventInfo("empty-document"),
-    "current-tab-storage": new CustomEventInfo("current-tab-storage")
+    "current-tab-storage": new CustomEventInfo("current-tab-storage"),
+    "config-icon-click": new CustomEventInfo("config-icon-click"),
+    "image-container-click": new CustomEventInfo("image-container-click"),
 };

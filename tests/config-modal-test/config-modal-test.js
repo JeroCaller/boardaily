@@ -1,4 +1,4 @@
-import { createConfigModalElement } from "/js/config-ui/config-modal.js";
+import { createConfigModalElement } from "/js/config-ui/config-modal/config-modal.js";
 
 function main() {
     const configModalElement = createConfigModalElement(['z-index', 10]);

@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0');
 :host {
     --background-color: #7469B6;
+    --hover-bg-color: #AD88C6;
     --menu-icon-size: 2em;
     
     display: flex;
@@ -28,4 +29,11 @@
 }
 #menu-icon:hover {
     cursor: pointer;
+}
+::slotted(#config-icon) {
+    padding: 0.5em;
+    cursor: pointer;
+}
+::slotted(#config-icon:hover) {
+    background-color: var(--hover-bg-color);
 }

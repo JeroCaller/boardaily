@@ -13,11 +13,12 @@
     justify-content: center;
     align-items: center;
 }
-#bg-config {
-    width: 20em;
+#config-modal {
+    width: 30em;
     height: 30em;
     padding: 1em;
     background-color: cornflowerblue;
+    border-radius: 1em;
 
     display: flex;
     justify-content: center;

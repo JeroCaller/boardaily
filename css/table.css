@@ -3,11 +3,11 @@
 @import url('table-page/main.css');
 @import url('table-page/footer.css');
 
-/* dark mode
 body {
-    background-color: rgb(50, 50, 50);
+    position: relative;
+    height: 700px;
 }
-*/
+
 #container {
     width: 100%;
     display: grid;
@@ -17,4 +17,6 @@ body {
     grid-template-areas: 
         "header main side-right"
         "side-left main side-right";
+    position: absolute;
+    z-index: 1;
 }
