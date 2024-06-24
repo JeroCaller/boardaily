@@ -1,6 +1,11 @@
 import { createConfigModalElement } from "./config-modal/config-modal.js";
 import { createTabElement } from "./config-tab/tab.js";
 import { createImageContainerElement } from "./image-container/image-container.js";
+import { customEventsInfo } from "../custom-events.js";
+import { loadBgImage } from "../functions.js";
+
+let currentTabStorageEventInfo = customEventsInfo["current-tab-storage"];
+currentTabStorageEventInfo.eventOption = {bubbles: true};
 
 function getConstructedConfigModal() {
     const configModal = createConfigModalElement(['z-index', 10]);
@@ -32,7 +37,7 @@ function getConstructedConfigModal() {
             align-items: center;
         }
         #icon-container > div {
-            margin-top: 2em;
+            margin: 2em auto;
             text-align: center;
         }
         #icon-container > div > span {
@@ -42,7 +47,7 @@ function getConstructedConfigModal() {
     </style>
     <div id='icon-container'>
         <div>
-            <span class="material-symbols-outlined">light_mode</span>
+            <span id="light-dark-mode" class="material-symbols-outlined">light_mode</span>
             <p>밝게</p>
         </div>
     </div>
@@ -77,14 +82,51 @@ function getConstructedConfigModal() {
     return configModal;
 }
 
+/**
+ * @param {HTMLElement} configModal 
+ */
+function setEventHandlersOnConfigModal(configModal) {
+    document.addEventListener('image-container-click', event => {
+        localStorage.setItem('bg-image', event.detail["img-src"]);
+        currentTabStorageEventInfo.eventDetail = {name: 'bg-image'};
+        document.dispatchEvent(currentTabStorageEventInfo.getEventObj());
+    });
+    document.addEventListener('current-tab-storage', event => {
+        if (event.detail.name != 'bg-image') return;
+        loadBgImage();
+    });
+    configModal.addEventListener('click', event => {
+        if (event.target.id != "light-dark-mode") return;
+        if (!event.target.textContent in ['light_mode', 'dark_mode']) return;
+
+        switch (event.target.textContent) {
+            case 'light_mode':
+                event.target.textContent = 'dark_mode';
+                event.target.parentNode.querySelector('p').textContent = '어둡게';
+                localStorage.setItem('bg-image', '--dark-mode');
+                break;
+            case 'dark_mode':
+                event.target.textContent = 'light_mode';
+                event.target.parentNode.querySelector('p').textContent = '밝게';
+                localStorage.setItem('bg-image', '--light-mode');
+        }
+
+        currentTabStorageEventInfo.eventDetail = {name: 'bg-image'};
+        document.dispatchEvent(currentTabStorageEventInfo.getEventObj());
+    });
+}
+
 export function createConfigIcon() {
-    let configIcon = document.createElement('span');
+    const configModal = getConstructedConfigModal();
+    setEventHandlersOnConfigModal(configModal);
+
+    const configIcon = document.createElement('span');
     configIcon.setAttribute('id', 'config-icon');
     configIcon.setAttribute('class', 'material-symbols-outlined');
     configIcon.textContent = 'settings';
     configIcon.addEventListener('click', () => {
         if (!document.querySelector('config-modal')) {
-            document.querySelector('body').append(getConstructedConfigModal());
+            document.querySelector('body').append(configModal);
         } else {
             document.querySelector('config-modal').style.display = 'flex';
         }

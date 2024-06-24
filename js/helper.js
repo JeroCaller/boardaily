@@ -28,13 +28,18 @@ export const toolsInfo = (async () => {
  * 특정 노드의 렌더링 완료 이후에 인자로 전달된 함수를 실행시킨다. 
  * @param {*} func - 실행할 함수 식별자
  * @param {Node} targetNode 
+ * @param {} observeOption - MutationObserver().observe() 메서드의 두 번째 인자에 전달할 옵션 객체 리터럴.
  */
-export function waitForRenderingAndExecuteFunc(func, targetNode) {
+export function waitForRenderingAndExecuteFunc(func, targetNode, observeOption) {
     let mutationOb = new MutationObserver((mutationRecords, observer) => {
         func();
         observer.disconnect();
     });
-    mutationOb.observe(targetNode, {childList: true});
+    if (!observeOption) {
+        mutationOb.observe(targetNode, {childList: true});
+    } else {
+        mutationOb.observe(targetNode, observeOption);
+    }
 }
 
 /**

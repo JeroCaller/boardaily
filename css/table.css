@@ -4,12 +4,15 @@
 @import url('table-page/footer.css');
 
 body {
+    --max-window-height: 680px;
+    
     position: relative;
-    height: 680px;
+    height: var(--max-window-height, 680px);
 }
 
 #container {
     width: 100%;
+    min-height: var(--max-window-height, 680px);
     display: grid;
     grid-template-columns: 1fr 5fr 1fr;
     grid-template-rows: 9em 80%;
@@ -19,4 +22,5 @@ body {
         "side-left main side-right";
     position: absolute;
     z-index: 1;
+    background-color: rgba(255, 255, 255, 0.3);
 }

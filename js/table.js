@@ -6,6 +6,7 @@ import { createTodoListElement } from './table-page/todolist/todolist.js';
 import { createWatchElement } from './table-page/watch/watch.js';
 import { createDateCalculatorElement } from './table-page/date-calculator/date-calculator.js';
 import * as helper from './helper.js';
+import { loadBgImage } from './functions.js';
 
 async function constructMenu() {
     const navTag = document.querySelector('#side-left > nav');
@@ -88,6 +89,7 @@ async function main() {
 
     // 메인 페이지에서 특정 툴 페이지로 넘어갈 때.
     attachToolElement(currentPageName, contentMain);
+    loadBgImage();
 }
 
 main();
