@@ -1,5 +1,5 @@
 import * as helper from '../../helper.js';
-import { getConstructedConfigModal } from '../../config-ui/config-result.js';
+import { createConfigIcon } from '../../config-ui/config-result.js';
 
 let slotNameForItems = "item-in-menu";
 
@@ -124,18 +124,7 @@ export async function createSideMenu() {
     let newSideMenu = document.createElement('side-menu');
     newSideMenu.setAttribute('width', '18em');
 
-    let configIcon = document.createElement('span');
-    configIcon.setAttribute('id', 'config-icon');
-    configIcon.setAttribute('class', 'material-symbols-outlined');
-    configIcon.textContent = 'settings';
-    configIcon.addEventListener('click', () => {
-        if (!document.querySelector('config-modal')) {
-            document.querySelector('body').append(getConstructedConfigModal());
-        } else {
-            document.querySelector('config-modal').style.display = 'flex';
-        }
-    });
-    newSideMenu.append(configIcon);
+    newSideMenu.append(createConfigIcon());
 
     const tools = await helper.toolsInfo;
     for(let prop in tools) {

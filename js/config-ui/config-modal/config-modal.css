@@ -1,6 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0');
 
 :host {
+    --config-modal-height: 30em;
+
     width: 100%;
     height: 100%;
 }
@@ -15,10 +17,11 @@
 }
 #config-modal {
     width: 30em;
-    height: 30em;
+    height: var(--config-modal-height, 30em);
     padding: 1em;
     background-color: cornflowerblue;
     border-radius: 1em;
+    overflow: auto;
 
     display: flex;
     justify-content: center;
