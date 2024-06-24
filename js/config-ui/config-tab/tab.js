@@ -1,4 +1,3 @@
-import * as helper from '../../helper.js';
 /**
  * 여러 요소들을 탭 화면 형식으로 보여주는 커스텀 요소. 
  * 주의: 이 커스텀 요소는 shadow DOM으로 구현하였기에, 이 요소에 삽입할 
@@ -23,16 +22,6 @@ class TabInterface extends HTMLElement {
     async connectedCallback() {
         this.attachShadow({mode: 'open'}).innerHTML = await this.combineStyleAndHTML();
         this.initElement();
-        /*
-        helper.waitForRenderingAndExecuteFunctions(
-            this.shadowRoot.lastChild,
-            [
-                [this.constructTabBtns.bind(this)],
-                [this.showDisplay.bind(this, 0)],
-                [this.setTabBtnColor.bind(this, 0)],
-                [this.setEventHandler.bind(this)],
-            ]
-        )*/
         this.constructTabBtns();
         this.showDisplay(0);
         this.setTabBtnColor(0);
@@ -53,13 +42,6 @@ class TabInterface extends HTMLElement {
 
     initElement() {
         this.slottedElements = this.shadowRoot.querySelector('slot').assignedElements();
-        /*
-        this.slottedElements;
-        if (this.shadowRoot.querySelector('slot').assignedElements().length != 0) {
-            this.slottedElements = this.shadowRoot.querySelector('slot').assignedElements();
-        } else if (this.shadowRoot.querySelector('slot[name="elements"]').assignedElements().length != 0) {
-            this.slottedElements = this.shadowRoot.querySelector('slot[name="elements"]').assignedElements();
-        } */
         this.tabBtnContainer = this.shadowRoot.querySelector('#tab-btn-container');
         this.tabDisp = this.shadowRoot.querySelector('#tab-display');
     }
@@ -101,7 +83,6 @@ class TabInterface extends HTMLElement {
         }
 
         this.clearDisplay();
-        //this.tabDisp.append(this.slottedElements[elementIndex]);
         this.slottedElements[elementIndex].style.display = 'inline-block';
     }
 

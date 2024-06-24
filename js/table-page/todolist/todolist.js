@@ -190,8 +190,6 @@ class TodoList extends HTMLElement {
      * false: 로컬 스토리지에 todo item 데이터가 하나도 없는 경우.
      */
     initTodoFromLocalStorage() {
-        //localStorage.clear();
-
         let todoData = this._getDataFromLocalStorage();
         if (Object.keys(todoData).length == 0) {
             return false;
@@ -229,8 +227,6 @@ class TodoList extends HTMLElement {
         }, this.ul.lastChild);
 
         return true;
-        
-        //uiLogic.printLocalStorage();
     }
 
     /**

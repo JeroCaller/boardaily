@@ -8,7 +8,6 @@
     padding: 1em;
 }
 :host(:hover) {
-    /*background-color: #AD88C6;*/
     background-color: var(--hover-bg-color, violet);
     cursor: pointer;
 }

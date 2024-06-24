@@ -16,7 +16,6 @@ class CalendarTitle extends HTMLElement {
 
     _setStyle() {
         return `<link rel="stylesheet" href="/js/table-page/calendar/calendar-title.css">`;
-        //return `<style>${await fetch('/js/table-page/calendar/calendar-title.css').then(res => res.text())}</style>`;
     }
 
     async _setInnerHTML() {
@@ -37,16 +36,6 @@ class Calendar extends HTMLElement {
         this.todayDate = new Date();
         this.currentDate = new Date(); // 현재 달력 화면에 보여지고 있는 연-월. 오늘 날짜란 보장이 없다. 
         this.attachShadow({mode: 'open'}).innerHTML = await this.combineStyleAndHTML();
-        /*
-        let mutationObserver = new MutationObserver((mutationRecord, observer) => {
-            this._initElementVars();
-            this.setGrid();
-            this.showCalendar(this.currentDate);
-            this.setEventHandler();
-            observer.disconnect();
-        });
-        mutationObserver.observe(this.shadowRoot.querySelector('calendar-title'), {childList: true});
-        */
         helper.waitForRenderingAndExecuteFunctions(
             this.shadowRoot.querySelector('calendar-title'),
             [
@@ -60,7 +49,6 @@ class Calendar extends HTMLElement {
     
     _setStyle() {
         return `<link rel="stylesheet" href="/js/table-page/calendar/calendar.css">`;
-        //return `<style>${await fetch('/js/table-page/calendar/calendar.css').then(res => res.text())}</style>`;
     }
 
     async _setInnerHTML() {
