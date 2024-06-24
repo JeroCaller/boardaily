@@ -7,6 +7,7 @@ body {
     --max-window-height: 680px;
     
     position: relative;
+    width: 99%;
     height: var(--max-window-height, 680px);
     margin: 0;
 }
