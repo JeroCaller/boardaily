@@ -31,6 +31,7 @@ class ConfigModal extends HTMLElement {
     initElement() {
         this.configModalElement = this.shadowRoot.querySelector('#config-modal');
         this.configContainer = this.shadowRoot.querySelector('#config-container');
+        this.closeBtn = this.shadowRoot.querySelector('#config-modal > #exit-modal');
     }
 
     setStyleByJs() {
@@ -47,6 +48,9 @@ class ConfigModal extends HTMLElement {
             if (event.target.id == 'config-container') {
                 this.style.display = 'none';
             }
+        });
+        this.closeBtn.addEventListener('click', () => {
+            this.style.display = 'none';
         });
     }
 }

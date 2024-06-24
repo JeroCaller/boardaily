@@ -8,6 +8,7 @@ body {
     
     position: relative;
     height: var(--max-window-height, 680px);
+    margin: 0;
 }
 
 #container {

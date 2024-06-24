@@ -70,7 +70,7 @@ function getConstructedConfigModal() {
     </style>
     <div id="content-container">
         <input type="search" placeholder="이미지 검색">
-        <label>제공: <span>hi</span></label>
+        <label>제공: <span> 추후 해당 기능 추가 예정 </span></label>
     </div>
     `);
     imgSearch.append(createImageContainerElement());
