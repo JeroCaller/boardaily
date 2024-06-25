@@ -81,7 +81,7 @@ class SideMenu extends HTMLElement {
 
     _setStyleByJS() {
         this.style.width = this.width;
-        this.style.transform = `translateX(calc(-${this.width} + var(--menu-icon-size)))`;
+        this.style.transform = `translateX(calc(-${this.width} + var(--menu-icon-size) + 0.5em))`;
         this.shadowRoot.querySelector('#item-container').style.width = this.width;
         this.addEventListener('mouseenter', () => {
             this.style.transform = `translateX(0)`;
@@ -96,7 +96,7 @@ class SideMenu extends HTMLElement {
             this.style.transition = `transform 0.5s`;
         });
         this.addEventListener('mouseleave', () => {
-            this.style.transform = `translateX(calc(-${this.width} + var(--menu-icon-size)))`;
+            this.style.transform = `translateX(calc(-${this.width} + var(--menu-icon-size) + 0.5em))`;
             this.style.transition = `transform 0.5s`;
         });
     }
