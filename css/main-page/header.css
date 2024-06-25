@@ -1,5 +1,4 @@
 header {
-    /*border: 1px solid black;*/
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: 2.5em 8.5em;
@@ -9,10 +8,6 @@ header {
     justify-content: center;
     height: 11em;
 }
-/*
-header > section {
-    border: 1px solid red;
-}*/
 #configs {
     grid-area: configs;
 }
@@ -32,4 +27,18 @@ header > section {
 }
 #page-title > p {
     margin: 0;
+}
+
+@media screen and (max-width: 600px) {
+    header {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(4, 1fr);
+        grid-template-areas:
+            "configs"
+            "page-title"
+            "title-left"
+            "title-right";
+        height: 11em;
+    }
 }

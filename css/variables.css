@@ -2,4 +2,10 @@
     --tool-thumbnail-default-width: 15em;
     --tool-thumbnail-default-height: calc(var(--tool-thumbnail-default-width) + 5em);
     --tool-thumbnail-default-bgcolor: skyblue;
+
+    --tool-thumbnail-mid-width: calc(var(--tool-thumbnail-default-width) - 5em);
+    --tool-thumbnail-mid-height: calc(var(--tool-thumbnail-default-height) - 5em);
+    
+    --tool-thumbnail-small-width: var(--tool-thumbnail-default-width);
+    --tool-thumbnail-small-height: 5em;
 }
