@@ -1,6 +1,6 @@
 #side-left {
     grid-area: side-left;
-    border: 1px solid red;
+    /* border: 1px solid red; */
     padding: 0;
 }
 #side-left > nav {
@@ -10,7 +10,7 @@
 
 #side-right {
     grid-area: side-right;
-    border: 1px solid pink;
+    /* border: 1px solid pink; */
     width: 100%;
 }
 
