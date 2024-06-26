@@ -1,5 +1,5 @@
 export async function getToolInfoInJson() {
-    return await fetch('/tools-info.json').then(res => res.json());
+    return await fetch('/content-data/tools-info.json').then(res => res.json());
 }
 
 /**
@@ -12,7 +12,7 @@ export function extractFileName(filePath) {
 }
 
 export const toolsInfo = (async () => {
-    const toolsJson = await fetch('/tools-info.json').then(res => res.json());
+    const toolsJson = await getToolInfoInJson();
     let infoObj = {};
     for (let i = 0; i < toolsJson.length; i++) {
         infoObj[extractFileName(toolsJson[i]["img-src"])] = {
