@@ -191,7 +191,7 @@ class TodoList extends HTMLElement {
      */
     initTodoFromLocalStorage() {
         let todoData = this._getDataFromLocalStorage();
-        if (Object.keys(todoData).length == 0) {
+        if (!todoData || Object.keys(todoData).length == 0) {
             return false;
         }
 
