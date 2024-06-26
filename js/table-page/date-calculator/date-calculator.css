@@ -12,6 +12,10 @@
     font-size: 1.5em;
     cursor: pointer;
 }
+#input-date > label {
+    padding: 1em;
+    background-color: #96B6C5;
+}
 #calculate {
     font-size: 1em;
     padding: 1em;
@@ -28,6 +32,7 @@
     background-color: #96B6C5;
     border: 1px solid red;
     padding: 1em;
+    box-sizing: border-box;
 }
 #result-displayer section {
     display: flex;
@@ -40,4 +45,27 @@
 #result-displayer section > p {
     padding: 0;
     margin: 0;
+}
+
+@media screen and (max-width: 450px) {
+    #input-date {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        grid-template-rows: repeat(2, 1fr);
+        grid-template-areas: 
+            "start-date calc-btn"
+            "end-date calc-btn";
+    }
+    #input-date > label {
+        padding: 0.1em;
+    }
+    #input-date > label[for="start-date"] {
+        grid-area: start-date;
+    }
+    #input-date > label[for="end-date"] {
+        grid-area: end-date;
+    }
+    #calculate {
+        grid-area: calc-btn;
+    }
 }
