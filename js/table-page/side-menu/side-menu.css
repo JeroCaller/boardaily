@@ -3,6 +3,7 @@
     --background-color: #7469B6;
     --hover-bg-color: #AD88C6;
     --menu-icon-size: 2em;
+    --menu-icon-width-small: 10em;
     
     display: flex;
 }
@@ -36,4 +37,17 @@
 }
 ::slotted(#config-icon:hover) {
     background-color: var(--hover-bg-color);
+}
+
+@media screen and (max-width: 900px) {
+    :host {
+        display: flex;
+        flex-direction: column-reverse;
+    }
+    #menu-icon {
+        width: 100%;
+    }
+    #item-container {
+        display: none;
+    }
 }

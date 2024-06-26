@@ -13,3 +13,11 @@
     border: 1px solid pink;
     width: 100%;
 }
+
+@media screen and (max-width: 900px) {
+    #side-left > nav {
+        box-sizing: border-box;
+        display: flex;
+        justify-content: center;
+    }
+}
