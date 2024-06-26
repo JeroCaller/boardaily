@@ -1,3 +1,15 @@
+export async function getBgImagesPath() {
+    let imagesName = await fetch('/content-data/background-images.json').then(res => res.json());
+    const rootPath = '/images/background/';
+    let imagePath = [];
+
+    for (let img of imagesName) {
+        imagePath.push(rootPath + img);
+    }
+
+    return imagePath;
+}
+
 export async function getToolInfoInJson() {
     return await fetch('/content-data/tools-info.json').then(res => res.json());
 }

@@ -211,7 +211,7 @@ export async function createSideMenu() {
     let newSideMenu = document.createElement('side-menu');
     newSideMenu.setAttribute('width', '18em');
 
-    newSideMenu.append(createConfigIcon());
+    newSideMenu.append(await createConfigIcon());
 
     const tools = await helper.toolsInfo;
     for(let prop in tools) {

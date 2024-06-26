@@ -3,23 +3,24 @@ import { createTabElement } from "./config-tab/tab.js";
 import { createImageContainerElement } from "./image-container/image-container.js";
 import { customEventsInfo } from "../custom-events.js";
 import { loadBgImage } from "../functions.js";
+import * as helper from '../helper.js';
 
 let currentTabStorageEventInfo = customEventsInfo["current-tab-storage"];
 currentTabStorageEventInfo.eventOption = {bubbles: true};
 
-function getConstructedConfigModal() {
+async function getConstructedConfigModal() {
     const configModal = createConfigModalElement(['z-index', 10]);
 
     const defaultImg = createImageContainerElement();
     defaultImg.setAttribute('tabname', 'photo_library');
     defaultImg.setAttribute('on-icon', '');
-    defaultImg.insertAdjacentHTML('beforeend', 
-    `<img src="/images/background/board1.png">
-    <img src="/images/background/board2.png">
-    <img src="/images/background/board3.png">
-    <img src="/images/background/board4.png">
-    <img src="/images/background/board5.png">
-    `);
+
+    const bgImagesPath = await helper.getBgImagesPath();
+    for (let imgPath of bgImagesPath) {
+        let imgElement = document.createElement('img');
+        imgElement.setAttribute('src', imgPath);
+        defaultImg.append(imgElement);
+    }
     
     const lightDarkMode = document.createElement('div');
     lightDarkMode.setAttribute('tabname', 'light_mode');
@@ -116,8 +117,8 @@ function setEventHandlersOnConfigModal(configModal) {
     });
 }
 
-export function createConfigIcon() {
-    const configModal = getConstructedConfigModal();
+export async function createConfigIcon() {
+    const configModal = await getConstructedConfigModal();
     setEventHandlersOnConfigModal(configModal);
 
     const configIcon = document.createElement('span');
