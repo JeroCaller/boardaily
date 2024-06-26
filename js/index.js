@@ -1,5 +1,6 @@
 import {ToolThumbnail} from './main-page/components.js';
 import * as helper from './helper.js';
+import { insertFooterHTML } from './footer.js';
 
 async function main() {
     const pageMain = document.querySelector('main');
@@ -16,6 +17,8 @@ async function main() {
         ></tool-thumbnail>`;
         pageMain.insertAdjacentHTML("beforeend", iHTML);
     }
+
+    insertFooterHTML();
 }
 
 main();

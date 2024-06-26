@@ -1,6 +1,6 @@
 @import url('main-page/header.css') screen;
 @import url('main-page/main-tag.css') screen;
-@import url('main-page/footer.css');
+@import url('footer.css');
 
 body {
     background-image: url('/images/background/board1.png');

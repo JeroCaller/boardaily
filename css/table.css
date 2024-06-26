@@ -1,7 +1,7 @@
 @import url('table-page/header.css');
 @import url('table-page/side-menu.css') screen;
 @import url('table-page/main.css');
-@import url('table-page/footer.css');
+@import url('footer.css');
 
 body {
     --max-window-height: 680px;
@@ -17,11 +17,12 @@ body {
     min-height: var(--max-window-height, 680px);
     display: grid;
     grid-template-columns: 1fr 5fr 1fr;
-    grid-template-rows: 9em 80%;
+    grid-template-rows: 9em 80% 100%;
     gap: 0 0.5em;
     grid-template-areas: 
         "header main side-right"
-        "side-left main side-right";
+        "side-left main side-right"
+        "footer footer footer";
     position: absolute;
     z-index: 1;
     background-color: rgba(255, 255, 255, 0.3);
@@ -30,21 +31,23 @@ body {
 @media screen and (max-width: 1200px) {
     #container {
         grid-template-columns: 1fr 5fr;
-        grid-template-rows: 9em 80%;
+        grid-template-rows: 9em 80% 100%;
         gap: 0 0.5em;
         grid-template-areas: 
             "header side-right"
-            "side-left main";
+            "side-left main"
+            "footer footer";
     }
 }
 @media screen and (max-width: 900px) {
     #container {
         grid-template-columns: 1fr;
-        grid-template-rows: 1fr 1fr 1fr 90%;
+        grid-template-rows: 1fr 1fr 1fr 90% 1fr;
         grid-template-areas: 
             "header"
             "side-right"
             "side-left"
-            "main";
+            "main"
+            "footer";
     }
 }
