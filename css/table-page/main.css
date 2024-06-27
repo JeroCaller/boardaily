@@ -12,6 +12,12 @@ main {
     align-items: center;
 }
 
+@media screen and (max-width: 1200px) {
+    main {
+        padding: 3em;
+    }
+}
+
 @media screen and (max-width: 900px) {
     main {
         padding: 1em;
