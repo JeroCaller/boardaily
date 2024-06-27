@@ -1,13 +1,20 @@
 export async function getBgImagesPath() {
-    let imagesName = await fetch('/content-data/background-images.json').then(res => res.json());
+    let imageInfo = await fetch('/content-data/background-images.json').then(res => res.json());
+    let newImageInfo = [];
     const rootPath = '/images/background/';
-    let imagePath = [];
 
-    for (let img of imagesName) {
-        imagePath.push(rootPath + img);
+    for(let i = 0; i < imageInfo.length; i++) {
+        newImageInfo.push(
+            {
+                path: rootPath + imageInfo[i].path,
+                category: imageInfo[i].category,
+                // 이미지 파일명을 추출.
+                detail: imageInfo[i].path.split('/').pop().split('.')[0]
+            }
+        );
     }
 
-    return imagePath;
+    return newImageInfo;
 }
 
 export async function getToolInfoInJson() {

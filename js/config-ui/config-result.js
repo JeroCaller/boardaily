@@ -14,19 +14,26 @@ async function getConstructedConfigModal() {
     const defaultImg = createImageContainerElement();
     defaultImg.setAttribute('tabname', 'photo_library');
     defaultImg.setAttribute('on-icon', '');
+    defaultImg.setAttribute('caption', 'Boardaily 제공 배경 이미지로 변경');
 
     const bgImagesPath = await helper.getBgImagesPath();
-    for (let imgPath of bgImagesPath) {
+    for (let i = 0; i < bgImagesPath.length; i++) {
         let imgElement = document.createElement('img');
-        imgElement.setAttribute('src', imgPath);
+        imgElement.setAttribute('src', bgImagesPath[i].path);
+        if (!bgImagesPath[i].category) {
+            imgElement.setAttribute('title', bgImagesPath[i].detail);
+        } else {
+            imgElement.setAttribute('title', 
+            `${bgImagesPath[i].detail} (${bgImagesPath[i].category})`);
+        }
         defaultImg.append(imgElement);
     }
     
     const lightDarkMode = document.createElement('div');
     lightDarkMode.setAttribute('tabname', 'light_mode');
     lightDarkMode.setAttribute('on-icon', '');
-    lightDarkMode.setAttribute('style', 
-    `width: 100%`);
+    lightDarkMode.setAttribute('style', `width: 100%`);
+    lightDarkMode.setAttribute('caption', 'light/dark mode');
     lightDarkMode.insertAdjacentHTML('beforeend', 
     `<style>
         #icon-container {
@@ -57,6 +64,7 @@ async function getConstructedConfigModal() {
     const imgSearch = document.createElement('div');
     imgSearch.setAttribute('tabname', 'image_search');
     imgSearch.setAttribute('on-icon', '');
+    imgSearch.setAttribute('caption', '온라인서 배경 이미지 검색');
     imgSearch.insertAdjacentHTML('beforeend', 
     `<style>
         #content-container {

@@ -5,10 +5,11 @@
  * @attribute tabname - (자식 요소 속성) 이 탭 요소의 자식 요소의 속성으로 지정. 
  * @attribute on-icon - (자식 요소 속성) 탭 버튼에 텍스트 대신 아이콘을 띄우고 싶은 경우 명시. 속성값 없음.
  * [Google material icon](https://fonts.google.com/icons?icon.size=24&icon.color=%23e8eaed)을 사용한다.
+ * @attribute caption - (자식 요소 속성) 탭 버튼에 마우스 hover 시 띄울 툴팁 내용 설정.
  * @example 
  * >> <tab-interface>
  * >>     <my-painter tabname="그림판"></my-painter>
- * >>     <my-calculator tabname="계산기"></my-calculator>
+ * >>     <my-calculator tabname="계산기" caption="계산기"></my-calculator>
  * >>     <my-config tabname="settings" on-icon></my-config>
  * >> </tab-interface>
  */
@@ -59,6 +60,10 @@ class TabInterface extends HTMLElement {
                 tabButton.setAttribute('class', 'tab-button');
             }
             tabButton.setAttribute('slot-idx', idx);
+
+            if (element.getAttribute('caption')) {
+                tabButton.setAttribute('title', element.getAttribute('caption'));
+            }
 
             if (element.getAttribute('tabname')) {
                 tabButton.textContent = element.getAttribute('tabname');

@@ -1,14 +1,50 @@
 [
-    "board1.png",
-    "board2.png",
-    "board3.png",
-    "board4.png",
-    "board5.png",
-    "coffee.png",
-    "moon-in-window-2.png",
-    "moon-in-window.png",
-    "black-bg.png",
-    "rainy.png",
-    "room-interior.png",
-    "ship-night.png"
+    {
+        "path": "board1.png",
+        "category": "AI-gen"
+    },
+    {
+        "path": "board2.png",
+        "category": "AI-gen"
+    },
+    {
+        "path": "board3.png",
+        "category": "AI-gen"
+    },
+    {
+        "path": "board4.png",
+        "category": "AI-gen"
+    },
+    {
+        "path": "board5.png",
+        "category": "AI-gen"
+    },
+    {
+        "path": "coffee.png",
+        "category": "AI-gen"
+    },
+    {
+        "path": "moon-in-window-2.png",
+        "category": "AI-gen"
+    },
+    {
+        "path": "moon-in-window.png",
+        "category": "AI-gen"
+    },
+    {
+        "path": "black-bg.png",
+        "category": "AI-gen"
+    },
+    {
+        "path": "rainy.png",
+        "category": "AI-gen"
+    },
+    {
+        "path": "room-interior.png",
+        "category": "AI-gen"
+    },
+    {
+        "path": "ship-night.png",
+        "category": "AI-gen"
+    }
 ]
