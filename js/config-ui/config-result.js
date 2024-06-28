@@ -74,22 +74,12 @@ async function getConstructedConfigModal() {
         }
         input[type="search"] {
             height: 2em;
-        }
-        input[type="button"] {
-            font-size: 1.1em;
-        }
-        #image-search {
-            display: flex;
-            align-items: center;
-            margin-right: 0.5em;
+            margin-right: 1em;
         }
     </style>
     <div id="content-container">
-        <div id="image-search">
-            <input type="search" placeholder="이미지 검색">
-            <input type="button" class="material-symbols-outlined" value="search">
-        </div>
-        <label>제공: <span> 추후 추가 예정 </span></label>
+        <input type="search" placeholder="이미지 검색">
+        <label>제공: <span> 추후 해당 기능 추가 예정 </span></label>
     </div>
     `);
     imgSearch.append(createImageContainerElement());
@@ -111,7 +101,6 @@ function setEventHandlersOnConfigModal(configModal) {
         document.dispatchEvent(currentTabStorageEventInfo.getEventObj());
     });
     document.addEventListener('current-tab-storage', event => {
-        if (!event.detail) return;
         if (event.detail.name != 'bg-image') return;
         loadBgImage();
     });
