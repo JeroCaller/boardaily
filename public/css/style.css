@@ -3,7 +3,7 @@
 @import url('footer.css');
 
 body {
-    background-image: url('/images/background/board1.png');
+    background-image: url('../images/background/board1.png');
     background-size: cover;
 }
 

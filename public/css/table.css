@@ -6,7 +6,7 @@
 body {
     --max-window-height: 680px;
 
-    background-image: url('/images/background/board1.png');
+    background-image: url('../images/background/board1.png');
     background-size: cover;
     
     position: relative;
