@@ -49,14 +49,10 @@ class ImageContainer extends HTMLElement {
                     throw err;
                 }
 
-                try {
+                if (document.querySelector('#img-attributions')) {
                     document.querySelector('main').removeChild(
                         document.querySelector('#img-attributions')
                     );
-                } catch (error) {
-                    if (!error instanceof TypeError) {
-                        throw error;
-                    }
                 }
             }
 
