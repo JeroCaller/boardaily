@@ -6,7 +6,7 @@
 #image-container {
     margin: 0;
     width: 100%;
-    height: calc(var(--config-modal-height, 10em) - 7em);
+    height: calc(var(--modal-height, 10em) - 7em);
     border: 2px solid black;
     padding: 1em;
 

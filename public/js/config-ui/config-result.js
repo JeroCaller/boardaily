@@ -1,5 +1,5 @@
-import { createConfigModalElement } from "./config-modal/config-modal.js";
-import { createTabElement } from "./config-tab/tab.js";
+import { createModalWindowElement } from "../modal/modal.js";
+import { createTabElement } from "../tab/tab.js";
 import { createImageContainerElement } from "./image-container/image-container.js";
 import { customEventsInfo } from "../custom-events.js";
 import { loadBgImage } from "../functions.js";
@@ -9,7 +9,7 @@ let currentTabStorageEventInfo = customEventsInfo["current-tab-storage"];
 currentTabStorageEventInfo.eventOption = {bubbles: true};
 
 async function getConstructedConfigModal() {
-    const configModal = createConfigModalElement(['z-index', 10]);
+    const configModal = createModalWindowElement(['z-index', 10], ['mode', 'config']);
 
     const defaultImg = createImageContainerElement();
     defaultImg.setAttribute('tabname', 'photo_library');
@@ -145,10 +145,10 @@ export async function createConfigIcon() {
     configIcon.setAttribute('class', 'material-symbols-outlined');
     configIcon.textContent = 'settings';
     configIcon.addEventListener('click', () => {
-        if (!document.querySelector('config-modal')) {
+        if (!document.querySelector('modal-window')) {
             document.querySelector('body').append(configModal);
         } else {
-            document.querySelector('config-modal').style.display = 'flex';
+            document.querySelector('modal-window').style.display = 'flex';
         }
     });
     

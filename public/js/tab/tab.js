@@ -2,11 +2,15 @@
  * 여러 요소들을 탭 화면 형식으로 보여주는 커스텀 요소. 
  * 주의: 이 커스텀 요소는 shadow DOM으로 구현하였기에, 이 요소에 삽입할 
  * 다른 요소들은 shadow DOM으로 구현되어 있으면 안된다.
- * @attribute tabname - 이 탭 요소의 자식 요소의 속성으로 지정.
+ * @attribute tabname - (자식 요소 속성) 이 탭 요소의 자식 요소의 속성으로 지정. 
+ * @attribute on-icon - (자식 요소 속성) 탭 버튼에 텍스트 대신 아이콘을 띄우고 싶은 경우 명시. 속성값 없음.
+ * [Google material icon](https://fonts.google.com/icons?icon.size=24&icon.color=%23e8eaed)을 사용한다.
+ * @attribute caption - (자식 요소 속성) 탭 버튼에 마우스 hover 시 띄울 툴팁 내용 설정.
  * @example 
  * >> <tab-interface>
  * >>     <my-painter tabname="그림판"></my-painter>
- * >>     <my-calculator tabname="계산기"></my-calculator>
+ * >>     <my-calculator tabname="계산기" caption="계산기"></my-calculator>
+ * >>     <my-config tabname="settings" on-icon></my-config>
  * >> </tab-interface>
  */
 class TabInterface extends HTMLElement {
@@ -50,11 +54,20 @@ class TabInterface extends HTMLElement {
 
         for (let [idx, element] of this.slottedElements.entries()) {
             let tabButton = document.createElement('div');
-            tabButton.setAttribute('class', 'tab-button');
+            if (element.getAttribute('on-icon') != null) {
+                tabButton.setAttribute('class', 'tab-button material-symbols-outlined');
+            } else {
+                tabButton.setAttribute('class', 'tab-button');
+            }
             tabButton.setAttribute('slot-idx', idx);
+
+            if (element.getAttribute('caption')) {
+                tabButton.setAttribute('title', element.getAttribute('caption'));
+            }
+
             if (element.getAttribute('tabname')) {
                 tabButton.textContent = element.getAttribute('tabname');
-            } else if(element.id) {
+            } else if (element.id) {
                 tabButton.textContent = element.id;
             } else {
                 tabButton.textContent = element.tagName;
@@ -64,7 +77,9 @@ class TabInterface extends HTMLElement {
     }
 
     clearDisplay() {
-        this.tabDisp.replaceChildren();
+        for (let i = 0; i < this.slottedElements.length; i++) {
+            this.slottedElements[i].style.display = 'none';
+        }
     }
 
     showDisplay(elementIndex) {
@@ -73,7 +88,7 @@ class TabInterface extends HTMLElement {
         }
 
         this.clearDisplay();
-        this.tabDisp.append(this.slottedElements[elementIndex]);
+        this.slottedElements[elementIndex].style.display = 'inline-block';
     }
 
     setTabBtnColor(slotIdx) {
@@ -92,7 +107,7 @@ class TabInterface extends HTMLElement {
         function isTargetElement(element) {
             let slotIdx = element.getAttribute('slot-idx');
             try {
-                if (element.attributes['class'].nodeValue != 'tab-button'
+                if (element.attributes['class'].nodeValue.split(' ')[0] != 'tab-button'
                 || slotIdx == null) {
                     return false;
                 }
