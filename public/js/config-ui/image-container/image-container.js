@@ -40,6 +40,26 @@ class ImageContainer extends HTMLElement {
             if (event.target.tagName != "IMG") {
                 return;
             }
+            try {
+                if (event.target.attributes['class'].textContent.split(' ').includes('just-icon')) {
+                    return;
+                }
+            } catch (err) {
+                if (!err instanceof TypeError) {
+                    throw err;
+                }
+
+                try {
+                    document.querySelector('main').removeChild(
+                        document.querySelector('#img-attributions')
+                    );
+                } catch (error) {
+                    if (!error instanceof TypeError) {
+                        throw error;
+                    }
+                }
+            }
+
             imageClickEvent.eventDetail = {'img-src': event.target.src};
             document.dispatchEvent(imageClickEvent.getEventObj());
         });

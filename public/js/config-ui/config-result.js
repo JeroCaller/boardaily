@@ -1,6 +1,7 @@
 import { createModalWindowElement } from "../modal/modal.js";
 import { createTabElement } from "../tab/tab.js";
 import { createImageContainerElement } from "./image-container/image-container.js";
+import { getRandomImgElement } from "./random-img-element.js";
 import { customEventsInfo } from "../custom-events.js";
 import { loadBgImage } from "../functions.js";
 import * as helper from '../helper.js';
@@ -28,6 +29,7 @@ async function getConstructedConfigModal() {
         }
         defaultImg.append(imgElement);
     }
+    defaultImg.append(getRandomImgElement());
     
     const lightDarkMode = document.createElement('div');
     lightDarkMode.setAttribute('tabname', 'light_mode');
