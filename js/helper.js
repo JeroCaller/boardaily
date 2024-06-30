@@ -1,4 +1,4 @@
-const rootPath = 'https://jerocaller.github.io/boardaily';
+const rootPath = 'https://jerocaller.github.io/boardaily/';
 
 export async function getBgImagesPath() {
     let imageInfo = await fetch(`content-data/background-images.json`).then(res => res.json());
