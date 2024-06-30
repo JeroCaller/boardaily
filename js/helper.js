@@ -33,7 +33,7 @@ export function extractFileName(filePath) {
 export const toolsInfo = (async () => {
     const toolsJson = await getToolInfoInJson();
     let infoObj = {};
-    const rootPath = "/boardaily/"
+    const rootPath = "/boardaily"
     for (let i = 0; i < toolsJson.length; i++) {
         infoObj[extractFileName(toolsJson[i]["img-src"])] = {
             "name": toolsJson[i]["name"],
