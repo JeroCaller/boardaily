@@ -28,7 +28,7 @@ class MenuItem extends HTMLElement {
     }
 
     _setInnerHTML() {
-        return `<a href="html/table.html#${helper.extractFileName(this.imgSrc)}">
+        return `<a href="table.html#${helper.extractFileName(this.imgSrc)}">
             <img src="${this.imgSrc}"></img>
             <span>${this.itemName}</span>
         </a>`;
