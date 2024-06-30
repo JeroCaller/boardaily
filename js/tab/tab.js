@@ -30,11 +30,11 @@ class TabInterface extends HTMLElement {
     }
 
     _setStyle() {
-        return `<link rel="stylesheet" href="/js/tab/tab.css">`;
+        return `<link rel="stylesheet" href="js/tab/tab.css">`;
     }
 
     async _setInnerHTML() {
-        return await fetch('/js/tab/tab.html').then(res => res.text());
+        return await fetch('js/tab/tab.html').then(res => res.text());
     }
 
     async combineStyleAndHTML() {
