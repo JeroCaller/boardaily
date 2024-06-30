@@ -1,5 +1,5 @@
 export async function getBgImagesPath() {
-    let imageInfo = await fetch('/content-data/background-images.json').then(res => res.json());
+    let imageInfo = await fetch('/boardaily/content-data/background-images.json').then(res => res.json());
     let newImageInfo = [];
     const rootPath = '/boardaily/images/background/';
 
@@ -18,7 +18,7 @@ export async function getBgImagesPath() {
 }
 
 export async function getToolInfoInJson() {
-    return await fetch('/content-data/tools-info.json').then(res => res.json());
+    return await fetch('/boardaily/content-data/tools-info.json').then(res => res.json());
 }
 
 /**
