@@ -3,7 +3,7 @@ const rootPath = 'https://jerocaller.github.io/boardaily';
 export async function getBgImagesPath() {
     let imageInfo = await fetch(`${rootPath}/content-data/background-images.json`).then(res => res.json());
     let newImageInfo = [];
-    const targetPath = '/images/background/';
+    const targetPath = 'images/background/';
 
     for(let i = 0; i < imageInfo.length; i++) {
         newImageInfo.push(
