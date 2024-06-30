@@ -18,7 +18,7 @@ export async function getBgImagesPath() {
 }
 
 export async function getToolInfoInJson() {
-    return await fetch('./content-data/tools-info.json').then(res => res.json());
+    return await fetch('/content-data/tools-info.json').then(res => res.json());
 }
 
 /**
