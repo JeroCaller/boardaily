@@ -1,12 +1,14 @@
+const rootPath = 'https://jerocaller.github.io/boardaily';
+
 export async function getBgImagesPath() {
-    let imageInfo = await fetch('https://jerocaller.github.io/boardaily/content-data/background-images.json').then(res => res.json());
+    let imageInfo = await fetch(`${rootPath}/content-data/background-images.json`).then(res => res.json());
     let newImageInfo = [];
-    const rootPath = '/images/background/';
+    const targetPath = '/images/background/';
 
     for(let i = 0; i < imageInfo.length; i++) {
         newImageInfo.push(
             {
-                path: rootPath + imageInfo[i].path,
+                path: rootPath + targetPath + imageInfo[i].path,
                 category: imageInfo[i].category,
                 // 이미지 파일명을 추출.
                 detail: imageInfo[i].path.split('/').pop().split('.')[0]
@@ -18,7 +20,7 @@ export async function getBgImagesPath() {
 }
 
 export async function getToolInfoInJson() {
-    return await fetch('https://jerocaller.github.io/boardaily/content-data/tools-info.json').then(res => res.json());
+    return await fetch(`${rootPath}/content-data/tools-info.json`).then(res => res.json());
 }
 
 /**
@@ -36,7 +38,7 @@ export const toolsInfo = (async () => {
     for (let i = 0; i < toolsJson.length; i++) {
         infoObj[extractFileName(toolsJson[i]["img-src"])] = {
             "name": toolsJson[i]["name"],
-            "img-src": toolsJson[i]["img-src"],
+            "img-src": rootPath + toolsJson[i]["img-src"],
             "hover-bgcolor": toolsJson[i]["hover-bgcolor"],
         };
     }
