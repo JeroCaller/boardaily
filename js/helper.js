@@ -29,7 +29,6 @@ export async function getToolInfoInJson() {
  * @returns - 파일 이름.
  */
 export function extractFileName(filePath) {
-    console.log(fileSplit);
     let fileSplit = filePath.split('/');
     return fileSplit[fileSplit.length-1].split('.')[0];
 }
