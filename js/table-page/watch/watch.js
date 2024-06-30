@@ -18,11 +18,11 @@ class DigitalWatch extends HTMLElement {
     }
 
     _setStyle() {
-        return `<link rel="stylesheet" href="/js/table-page/watch/watch.css">`;
+        return `<link rel="stylesheet" href="js/table-page/watch/watch.css">`;
     }
 
     async _setInnerHTML() {
-        return await fetch('/js/table-page/watch/watch.html').then(res => res.text());
+        return await fetch('js/table-page/watch/watch.html').then(res => res.text());
     }
 
     async combineStyleAndHTML() {

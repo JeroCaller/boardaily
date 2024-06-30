@@ -24,11 +24,11 @@ class MenuItem extends HTMLElement {
     }
 
     _setStyle() {
-        return '<link rel="stylesheet" href="/js/table-page/side-menu/menu-item.css">';
+        return '<link rel="stylesheet" href="js/table-page/side-menu/menu-item.css">';
     }
 
     _setInnerHTML() {
-        return `<a href="/html/table.html#${helper.extractFileName(this.imgSrc)}">
+        return `<a href="html/table.html#${helper.extractFileName(this.imgSrc)}">
             <img src="${this.imgSrc}"></img>
             <span>${this.itemName}</span>
         </a>`;
@@ -94,7 +94,7 @@ class SideMenu extends HTMLElement {
      * @description this.styleString에 <style> 태그를 이용하여 shadow DOm 스타일 지정
      */
     _setStyle() {
-        return '<link rel="stylesheet" media="screen" href="/js/table-page/side-menu/side-menu.css">';
+        return '<link rel="stylesheet" media="screen" href="js/table-page/side-menu/side-menu.css">';
     }
 
     _setStyleByJS() {

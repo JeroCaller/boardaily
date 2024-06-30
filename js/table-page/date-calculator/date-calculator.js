@@ -9,11 +9,11 @@ class DateCalculator extends HTMLElement {
     }
 
     _setStyle() {
-        return `<link rel="stylesheet" href="/js/table-page/date-calculator/date-calculator.css">`;
+        return `<link rel="stylesheet" href="js/table-page/date-calculator/date-calculator.css">`;
     }
 
     async _setInnerHTML() {
-        return await fetch('/js/table-page/date-calculator/date-calculator.html').then(res => res.text());
+        return await fetch('js/table-page/date-calculator/date-calculator.html').then(res => res.text());
     }
 
     async combineStyleAndHTML() {

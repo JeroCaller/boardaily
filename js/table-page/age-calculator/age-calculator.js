@@ -14,7 +14,7 @@ class LabeledInput extends HTMLElement {
     }
 
     _setStyle() {
-        return `<link rel="stylesheet" href="/js/table-page/age-calculator/labeled-input.css">`;
+        return `<link rel="stylesheet" href="js/table-page/age-calculator/labeled-input.css">`;
     }
 
     _setInnerHTML() {
@@ -70,11 +70,11 @@ class AgeCalculator extends HTMLElement {
     }
 
     _setStyle() {
-        return '<link rel="stylesheet" href="/js/table-page/age-calculator/age-calculator.css">';
+        return '<link rel="stylesheet" href="js/table-page/age-calculator/age-calculator.css">';
     }
 
     async _setInnerHTML() {
-        return await fetch('/js/table-page/age-calculator/age-calculator.html').then(res => res.text());
+        return await fetch('js/table-page/age-calculator/age-calculator.html').then(res => res.text());
     }
 
     async combineStyleAndInnerHTML() {

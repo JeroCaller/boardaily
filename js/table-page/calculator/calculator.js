@@ -7,7 +7,7 @@ class CalcDisplayer extends HTMLElement {
     }
 
     _setStyle() {
-        return `<link rel="stylesheet" href="/js/table-page/calculator/calculator-display.css">`;
+        return `<link rel="stylesheet" href="js/table-page/calculator/calculator-display.css">`;
     }
 
     setStyleInJs() {
@@ -57,7 +57,7 @@ class Calculator extends HTMLElement {
     }
 
     _setStyle() {
-        return `<link rel="stylesheet" href="/js/table-page/calculator/calculator.css">`;
+        return `<link rel="stylesheet" href="js/table-page/calculator/calculator.css">`;
     }
 
     _setInnerHTML() {
