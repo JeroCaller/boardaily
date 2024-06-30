@@ -1,6 +1,6 @@
 export function getRandomImgElement() {
     const imgElement = document.createElement('img');
-    imgElement.setAttribute('src', '/images/background/question-mark.png');
+    imgElement.setAttribute('src', 'images/background/question-mark.png');
     imgElement.setAttribute('alt', '오늘의 랜덤 이미지');
     imgElement.setAttribute('title', '오늘의 랜덤 이미지');
     imgElement.setAttribute('class', 'just-icon');

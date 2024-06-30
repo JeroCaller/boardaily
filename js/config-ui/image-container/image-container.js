@@ -20,11 +20,11 @@ class ImageContainer extends HTMLElement {
     }
 
     _setStyle() {
-        return `<link rel="stylesheet" href="/js/config-ui/image-container/image-container.css">`;
+        return `<link rel="stylesheet" href="js/config-ui/image-container/image-container.css">`;
     }
 
     async _setInnerHTML() {
-        return await fetch('/js/config-ui/image-container/image-container.html').then(res => res.text());
+        return await fetch('js/config-ui/image-container/image-container.html').then(res => res.text());
     }
 
     async combineStyleAndHTML() {
