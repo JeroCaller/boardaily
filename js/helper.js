@@ -1,7 +1,7 @@
 const rootPath = 'https://jerocaller.github.io/boardaily';
 
 export async function getBgImagesPath() {
-    let imageInfo = await fetch(`${rootPath}/content-data/background-images.json`).then(res => res.json());
+    let imageInfo = await fetch(`content-data/background-images.json`).then(res => res.json());
     let newImageInfo = [];
     const targetPath = 'images/background/';
 
@@ -20,7 +20,7 @@ export async function getBgImagesPath() {
 }
 
 export async function getToolInfoInJson() {
-    return await fetch(`${rootPath}/content-data/tools-info.json`).then(res => res.json());
+    return await fetch(`content-data/tools-info.json`).then(res => res.json());
 }
 
 /**
@@ -29,7 +29,9 @@ export async function getToolInfoInJson() {
  * @returns - 파일 이름.
  */
 export function extractFileName(filePath) {
-    return filePath.split('/')[2].split('.')[0];
+    console.log(fileSplit);
+    let fileSplit = filePath.split('/');
+    return fileSplit[fileSplit.length-1].split('.')[0];
 }
 
 export const toolsInfo = (async () => {
