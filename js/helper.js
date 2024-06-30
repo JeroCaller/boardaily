@@ -1,7 +1,7 @@
 export async function getBgImagesPath() {
-    let imageInfo = await fetch('/boardaily/content-data/background-images.json').then(res => res.json());
+    let imageInfo = await fetch('/content-data/background-images.json').then(res => res.json());
     let newImageInfo = [];
-    const rootPath = '/boardaily/images/background/';
+    const rootPath = '/images/background/';
 
     for(let i = 0; i < imageInfo.length; i++) {
         newImageInfo.push(
@@ -18,7 +18,7 @@ export async function getBgImagesPath() {
 }
 
 export async function getToolInfoInJson() {
-    return await fetch('/boardaily/content-data/tools-info.json').then(res => res.json());
+    return await fetch('/content-data/tools-info.json').then(res => res.json());
 }
 
 /**
@@ -33,11 +33,10 @@ export function extractFileName(filePath) {
 export const toolsInfo = (async () => {
     const toolsJson = await getToolInfoInJson();
     let infoObj = {};
-    const rootPath = "/boardaily"
     for (let i = 0; i < toolsJson.length; i++) {
         infoObj[extractFileName(toolsJson[i]["img-src"])] = {
             "name": toolsJson[i]["name"],
-            "img-src": rootPath + toolsJson[i]["img-src"],
+            "img-src": toolsJson[i]["img-src"],
             "hover-bgcolor": toolsJson[i]["hover-bgcolor"],
         };
     }
