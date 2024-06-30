@@ -1,7 +1,7 @@
 export async function getBgImagesPath() {
     let imageInfo = await fetch('/content-data/background-images.json').then(res => res.json());
     let newImageInfo = [];
-    const rootPath = '/images/background/';
+    const rootPath = '/boardaily/images/background/';
 
     for(let i = 0; i < imageInfo.length; i++) {
         newImageInfo.push(
