@@ -147,8 +147,24 @@ export function replacePercent(expStr) {
         for (let i = 0; i < nums.length; i++) {
             nums[i] = parseFloat(nums[i]);
         }
-        let calculatedNum = nums[0] * (nums[1] / 100);
-        matchResult[idx] = nums[0].toString() + binaryOperator + calculatedNum.toString();
+
+        let calculatedNum;
+        if (binaryOperator != "/") {
+            calculatedNum = nums[0] * (nums[1] / 100);
+        } else {
+            calculatedNum = nums[0] / (nums[1] / 100);
+        }
+        
+        switch (binaryOperator) {
+            case "+":
+            case "-":
+                matchResult[idx] = nums[0].toString() + binaryOperator + calculatedNum.toString();
+                break;
+            case "*":
+            case "/":
+                matchResult[idx] = calculatedNum.toString();
+                break;
+        }
     }
     
     /*
