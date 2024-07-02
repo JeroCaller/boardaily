@@ -21,8 +21,8 @@ index.html 또는 table.html의 사이드 메뉴에 표시할 새 툴을 추가�
 1. 이미지는 /images 폴더 내부에 넣는다. /images 폴더 내 하위 폴더에 넣지 않고 해당 폴더 바로 아래에 넣도록 주의한다. 
 2. /content-data/tools-info.json에 배열 내 객체를 생성하여 다음의 내용들을 프로퍼티 형식으로 차례로 입력.
     - name : 툴 이름 ex) 계산기
-    - img-src : 추가한 이미지 경로. /images로 시작한다.   
-      ex) /images/calculator.png
+    - img-src : 추가한 이미지 경로. images로 시작한다.   
+      ex) images/calculator.png
     - hover-bgcolor : 마우스 hover시 변경될 배경색 지정. index.html 화면에서만 적용됨. css의 background-color 속성값 지정하는 것과 동일함. ex) #121212. 만약 null로 지정하면, 기본 색으로 자동 지정된다. 기본 색은 /css/variables.css 파일의 --tool-thumbnail-default-bgcolor css 변수에 지정되어 있음. 
 
 예시)
@@ -30,12 +30,12 @@ index.html 또는 table.html의 사이드 메뉴에 표시할 새 툴을 추가�
 [
     {
         "name": "계산기",
-        "img-src": "/images/calculator.png",
+        "img-src": "images/calculator.png",
         "hover-bgcolor": null
     },
     {
         "name": "나이 계산기",
-        "img-src": "/images/age.png",
+        "img-src": "images/age.png",
         "hover-bgcolor": "#fffdb5"
     },
 ]
@@ -87,7 +87,7 @@ table.html 페이지의 배경으로 나타낼 이미지 추가 시 다음의 �
 
 3. 해당 폴더에 새 .js 파일을 생성한다. 해당 파일명은 자유롭게 지으면 되는데, 이왕이면 툴 이름으로 짓는 것이 좋겠다. 계산기를 구현하고자 한다면 calculator.js 와 같이 파일명을 짓는다. 
 
-4. 3에서 새로 만든 js 파일 내부에 /js 폴더 내 template.js 내용을 복사, 붙여넣기 한다. template.js 파일 내부에는 shadow DOM을 이용한 웹 컴포넌트 형식으로 툴을 구현하기 위한 템플릿이 준비되어 있어 이를 사용하는 것이다. 복사 후, 쓸데없는 주석은 삭제해도 되고, 커스텀 요소 클래스명, 태그명은 툴 이름으로 바꾸면 된다. 
+4. 3에서 새로 만든 js 파일 내부에 /js 폴더 내 template.js 내용을 복사, 붙여넣기 한다. template.js 파일 내부에는 shadow DOM을 이용한 웹 컴포넌트 형식으로 툴을 구현하기 위한 템플릿이 준비되어 있어 이를 사용하는 것이다. 복사 후, 불필요한 주석은 삭제해도 되고, 커스텀 요소 클래스명, 태그명은 툴 이름으로 바꾸면 된다. 
 
 5. 2에서 생성한 새로운 툴 컴포넌트 폴더 내에 툴 요소를 화면에 표시하기 위한 HTML, 해당 툴의 스타일을 꾸미기 위한 CSS 파일도 새로 생성한다. 역시 툴 이름을 따르면 되겠다. ex) calculator.html, calculator.css. 그리고 해당 html, css 경로를 앞선 자바스크립트 파일 내 각각 _setInnerHTML() 메서드 내부 fetch() 함수 인자, _setStyle() 메서드 내 href 값으로 차례대로 대입한다. 이 때 경로는 /js/table-page/calculator/calculator.html 와 같이 절대 경로로 지정해야 작동된다(상대 경로로 해보니 작동이 되질 않는다). 
 
@@ -151,7 +151,7 @@ function attachToolElement(currentPageName, parentElement) {
         default:
             toolElement = document.createElement('div');
             toolElement.insertAdjacentHTML('beforeend', `
-                <img src="/images/under-construction.png", alt="공사 중">
+                <img src="images/under-construction.png", alt="공사 중">
                 <h1 style="text-align:center">공사 중!</h1>
             `);
     }
