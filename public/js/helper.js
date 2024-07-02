@@ -1,12 +1,12 @@
 export async function getBgImagesPath() {
-    let imageInfo = await fetch('/content-data/background-images.json').then(res => res.json());
+    let imageInfo = await fetch('content-data/background-images.json').then(res => res.json());
     let newImageInfo = [];
-    const rootPath = '/images/background/';
+    const targetPath = 'images/background/';
 
     for(let i = 0; i < imageInfo.length; i++) {
         newImageInfo.push(
             {
-                path: rootPath + imageInfo[i].path,
+                path: targetPath + imageInfo[i].path,
                 category: imageInfo[i].category,
                 // 이미지 파일명을 추출.
                 detail: imageInfo[i].path.split('/').pop().split('.')[0]
@@ -18,7 +18,7 @@ export async function getBgImagesPath() {
 }
 
 export async function getToolInfoInJson() {
-    return await fetch('/content-data/tools-info.json').then(res => res.json());
+    return await fetch('content-data/tools-info.json').then(res => res.json());
 }
 
 /**
@@ -27,7 +27,8 @@ export async function getToolInfoInJson() {
  * @returns - 파일 이름.
  */
 export function extractFileName(filePath) {
-    return filePath.split('/')[2].split('.')[0];
+    let fileSplit = filePath.split('/');
+    return fileSplit[fileSplit.length-1].split('.')[0];
 }
 
 export const toolsInfo = (async () => {

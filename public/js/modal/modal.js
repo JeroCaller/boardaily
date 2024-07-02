@@ -23,11 +23,11 @@ class ModalWindow extends HTMLElement {
     }
 
     _setStyle() {
-        return `<link rel="stylesheet" href="/js/modal/modal.css">`;
+        return `<link rel="stylesheet" href="js/modal/modal.css">`;
     }
 
     async _setInnerHTML() {
-        return await fetch('/js/modal/modal.html').then(res => res.text());
+        return await fetch('js/modal/modal.html').then(res => res.text());
     }
 
     async combineStyleAndHTML() {

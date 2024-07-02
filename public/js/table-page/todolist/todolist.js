@@ -15,11 +15,11 @@ class TodoItem extends HTMLElement {
     }
 
     _setStyle() {
-        return `<link rel="stylesheet" href="/js/table-page/todolist/todoitem.css">`;
+        return `<link rel="stylesheet" href="js/table-page/todolist/todoitem.css">`;
     }
 
     async _setInnerHTML() {
-        return await fetch('/js/table-page/todolist/todoitem.html').then(res => res.text());
+        return await fetch('js/table-page/todolist/todoitem.html').then(res => res.text());
     }
 
     async combineStyleAndHTML() {
@@ -103,11 +103,11 @@ class TodoList extends HTMLElement {
     }
 
     _setStyle() {
-        return `<link rel="stylesheet" href="/js/table-page/todolist/todolist.css">`;
+        return `<link rel="stylesheet" href="js/table-page/todolist/todolist.css">`;
     }
 
     async _setInnerHTML() {
-        return await fetch('/js/table-page/todolist/todolist.html').then(res => res.text());
+        return await fetch('js/table-page/todolist/todolist.html').then(res => res.text());
     }
 
     async combineStyleAndHTML() {

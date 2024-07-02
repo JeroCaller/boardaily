@@ -57,7 +57,7 @@ function attachToolElement(currentPageName, parentElement) {
         default:
             toolElement = document.createElement('div');
             toolElement.insertAdjacentHTML('beforeend', `
-                <img src="/images/under-construction.png", alt="공사 중">
+                <img src="images/under-construction.png", alt="공사 중">
                 <h1 style="text-align:center">공사 중!</h1>
             `);
     }

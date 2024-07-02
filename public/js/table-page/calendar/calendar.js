@@ -15,11 +15,11 @@ class CalendarTitle extends HTMLElement {
     }
 
     _setStyle() {
-        return `<link rel="stylesheet" href="/js/table-page/calendar/calendar-title.css">`;
+        return `<link rel="stylesheet" href="js/table-page/calendar/calendar-title.css">`;
     }
 
     async _setInnerHTML() {
-        return await fetch('/js/table-page/calendar/calendar-title.html').then(res => res.text());
+        return await fetch('js/table-page/calendar/calendar-title.html').then(res => res.text());
     }
 
     async combineStyleAndHTML() {
@@ -48,11 +48,11 @@ class Calendar extends HTMLElement {
     }
     
     _setStyle() {
-        return `<link rel="stylesheet" href="/js/table-page/calendar/calendar.css">`;
+        return `<link rel="stylesheet" href="js/table-page/calendar/calendar.css">`;
     }
 
     async _setInnerHTML() {
-        return await fetch('/js/table-page/calendar/calendar.html').then(res => res.text());
+        return await fetch('js/table-page/calendar/calendar.html').then(res => res.text());
     }
 
     async combineStyleAndHTML() {

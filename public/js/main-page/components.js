@@ -31,7 +31,7 @@ export class ToolThumbnail extends HTMLElement {
 
     _setInnerHTML() {
         return `<section>
-            <a href="html/table.html${this.getAttribute('id')}">
+            <a href="table.html${this.getAttribute('id')}">
                 <img src="${this.getAttribute('img-src')}" alt="${this.toolName}">
                 <p>${this.toolName}</p>
             </a>
