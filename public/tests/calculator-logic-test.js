@@ -62,6 +62,13 @@ function main(allSilence) {
         [testReplacePercent, ["(30+30%)+(20+40%)", "(30+9)+(20+8)"]],
         [testReplacePercent, ["30+30%+10", "30+9+10"]],
         [testReplacePercent, ["50+(50%+2)", "50+(50%+2)"]],
+        [testReplacePercent, ["100*20%", "20"]],
+        [testReplacePercent, ["200*30%", "60"]],
+        [testReplacePercent, ["100/20%", "500"]],
+        [testReplacePercent, ["200*30%+300*10%", "60+30"]],
+        [testReplacePercent, ["200*30%+300/10%", "60+3000"]],
+        [testReplacePercent, ["(30*30%)+(20*40%)", "(9)+(8)"]],
+        [testReplacePercent, ["(30/30%)+(20/40%)", "(100)+(50)"]],
     ];
     let appliedTests = [];
     for (let record of testArr) {
