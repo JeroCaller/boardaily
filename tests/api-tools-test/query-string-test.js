@@ -29,6 +29,10 @@ function main(allSilence) {
             },
             "?name=john&age=32&job=web-developer"
         ]],
+        [testToQueryString, [{
+            name: 'john',
+            age: 32,
+        }, '?name=john&age=32']],
     ];
 
     let appliedTests = [];
