@@ -1,5 +1,5 @@
 import * as ttool from '../my-test-tool.js';
-import { toQueryString } from '../../api-tools/query-str.js';
+import { toQueryString } from '../query-str.js';
 
 function testToQueryString(arg, expected, silence) {
     return ttool.testFrame(arg, toQueryString, expected, silence);

@@ -1,4 +1,4 @@
-import * as apiTools from '../../api-tools/query-str.js';
+import * as apiTools from '../query-str.js';
 import dotenv from 'dotenv';
 import fs from 'fs';
 
@@ -26,16 +26,16 @@ function getResponseTest() {
     fetch(constructRequestUrl(), {
         method: "GET"
     })
-        .then(res => res.json())
-        .then(result => {
-            console.log(result);
-            console.log(typeof result);
-            fs.writeFile(
-                `./${resFileName}`, 
-                JSON.stringify(result, null, 2), 
-                () => console.log(`${resFileName} 파일 저장 완료`)
-            );
-        });
+    .then(res => res.json())
+    .then(result => {
+        console.log(result);
+        console.log(typeof result);
+        fs.writeFile(
+            `./${resFileName}`, 
+            JSON.stringify(result, null, 2), 
+            () => console.log(`${resFileName} 파일 저장 완료`)
+        );
+    });
 }
 
 getResponseTest();
