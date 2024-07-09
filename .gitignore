@@ -3,5 +3,4 @@ study/
 node_modules
 .env
 tests/weather-api-test/error.txt
-tests/weather-api-test/response.json
 tests/weather-api-test/response-record/

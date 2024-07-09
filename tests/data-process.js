@@ -1,10 +1,8 @@
-import fs from 'fs';
-
 /**
  * 초단기예보 api 응답 요청으로 얻은 데이터 처리. 여기서는 원하는 데어터만 추출하는 작업을 
  * 실행한다.
  */
-class WeatherData {
+export class WeatherData {
     /**
      * 
      * @param {object} apiData - api 요청으로 응답받은 json 문자열을 parse하고 나온 객체.
@@ -85,32 +83,9 @@ class WeatherData {
                 let dateDiff = aDateTime.date - bDateTime.date;
                 let timeDiff = aDateTime.time - bDateTime.time;
 
-                if (dateDiff > 0) {
-                    return 1;
-                } else if (dateDiff < 0) {
-                    return -1;
-                } else {
-                    if (timeDiff > 0) {
-                        return 1;
-                    } else if (timeDiff < 0) {
-                        return -1;
-                    }
-                }
-                return 0;
+                if (dateDiff != 0) return dateDiff; 
+                return timeDiff;
             });
         }
     }
 }
-
-function testWeatherData() {
-    let apiData = JSON.parse(fs.readFileSync('./response.json', 'utf-8'));
-    let wData = new WeatherData(apiData);
-
-    //console.log(wData.getTemperatures());
-    //console.log(wData.getPrecipitations());
-    //console.log(wData.getHumidities());
-    //console.log(wData.getPtys());
-    console.log(wData.getSkies());
-}
-
-testWeatherData();
