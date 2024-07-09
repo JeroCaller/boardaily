@@ -1,15 +1,4 @@
-import { records } from "./read-data.js";
-
-/**
- * 1, 2, 3 단계로 나뉜 주소를 합친 전체 주소를 반환.
- * @example - {'1단계': '서울특별시', '2단계':'동대문구', '3단계':'회기동'} 
- * => '서울특별시 동대문구 회기동'
- * @param {*} record 
- * @returns {string} 전체 주소.
- */
-function getFullAddress(record) {
-    return [record['1단계'], record['2단계'], record['3단계']].join(' ').trim();
-}
+import * as addTool from './change-address.js';
 
 class Node {
     constructor(oneRecord) {
@@ -44,10 +33,10 @@ class Node {
     }
 
     _parseData() {
-        this._regionCode = this.record['행정구역코드'];
-        this._address = getFullAddress(this.record);
-        this._nx = this.record['격자 X'];
-        this._ny = this.record['격자 Y'];
+        this._regionCode = this._record['행정구역코드'];
+        this._address = addTool.getFullAddress(this._record);
+        this._nx = this._record['격자 X'];
+        this._ny = this._record['격자 Y'];
     }
 
     getData() {
@@ -57,6 +46,111 @@ class Node {
             nx: this._nx,
             ny: this._ny
         };
+    }
+}
+
+class SelfBalance {
+    /**
+     * 이진 트리가 왼쪽으로 기울어졌을 경우. 
+     * 이를 고쳐 좌우 균형을 맞춘다.
+     * @param {Node} node 
+     * @returns {Node}
+     */
+    static fixWhenLeftLeaning(node) {
+        if (node.getBF() >= 2) {
+            // left - left
+            if (node.leftChild.getBF() >= 0) {
+                node = this._rotateRight(node);
+            }
+            else {
+                // left - right
+                node = this._rotateLeftRight(node);
+            }
+        }
+        return node;
+    }
+
+    /**
+     * 이진 트리가 오른쪽으로 기울어졌을 경우, 
+     * 이를 고쳐 좌우 균형을 맞춘다.
+     * @param {Node} node
+     * @returns {Node} 
+     */
+    static fixWhenRightLeaning(node) {
+        if (node.getBF() <= -2) {
+            if (node.rightChild.getBF() <= 0) {
+                // right - right
+                node = this._rotateLeft(node);
+            } else {
+                // right - left 
+                node = this._rotateRightLeft(node);
+            }
+        }
+        return node;
+    }
+
+    /**
+     * left - left일 경우 균형을 맞춘다.
+     * @param {Node} node 
+     * @returns {Node} 균형 재조정 후의 새 루트 노드
+     */
+    static _rotateRight(node) {
+        let newRoot = node.leftChild;
+        node.leftChild = newRoot.rightChild;
+        newRoot.rightChild = node;
+
+        node.calculateNodeHeight();
+        return newRoot;
+    }
+
+    /**
+     * left - right일 경우 균형을 맞춘다.
+     * @param {Node} node
+     * @returns {Node} 균형 재조정 후의 새 루트 노드
+     */
+    static _rotateLeftRight(node) {
+        let newRoot = node.leftChild.rightChild;
+        let newLeft = node.leftChild;
+        newLeft.rightChild = newRoot.leftChild;
+        node.leftChild = newRoot.rightChild;
+        newRoot.leftChild = newLeft;
+        newRoot.rightChild = node;
+
+        node.calculateNodeHeight();
+        newLeft.calculateNodeHeight();
+        return newRoot;
+    }
+
+    /**
+     * right - right일 경우 균형을 맞춘다.
+     * @param {Node} node 
+     * @returns {Node} 균형 재조정 후의 새 루트 노드
+     */
+    static _rotateLeft(node) {
+        let newRoot = node.rightChild;
+        node.rightChild = newRoot.leftChild;
+        newRoot.leftChild = node;
+
+        node.calculateNodeHeight();
+        return newRoot;
+    }
+
+    /**
+     * right - left일 경우 균형을 맞춘다.
+     * @param {*} node 
+     * @returns {Node} 균형 재조정 후의 새 루트 노드
+     */
+    static _rotateRightLeft(node) {
+        let newRoot = node.rightChild.leftChild;
+        let newRight = node.rightChild;
+        node.rightChild = newRoot.leftChild;
+        newRight.leftChild = newRoot.rightChild;
+        newRoot.leftChild = node;
+        newRoot.rightChild = newRight;
+
+        node.calculateNodeHeight();
+        newRight.calculateNodeHeight();
+        return newRoot;
     }
 }
 
@@ -71,6 +165,8 @@ export class BinaryTreeForWeather {
 
         this._root = null;
         this._nodeNum = 0; // 이진 트리 내 총 노드 개수. 
+
+        this._insertAllInnerData();
     }
 
     get length() {return this._nodeNum}
@@ -79,7 +175,7 @@ export class BinaryTreeForWeather {
         let hashTable = {};
 
         this.records.forEach(obj => {
-            let address = getFullAddress(obj);
+            let address = addTool.getFullAddress(obj);
             hashTable[address] = parseInt(obj['행정구역코드']);
         });
 
@@ -103,8 +199,12 @@ export class BinaryTreeForWeather {
         let value = parseInt(record['행정구역코드']);
         if (value <= node.value) {
             node.leftChild = this._insert(node.leftChild, record);
+            node.calculateNodeHeight();
+            node = SelfBalance.fixWhenLeftLeaning(node);
         } else if (value >= node.value) {
             node.rightChild = this._insert(node.rightChild, record);
+            node.calculateNodeHeight();
+            node = SelfBalance.fixWhenRightLeaning(node);
         }
         node.calculateNodeHeight();
         return node;
@@ -115,11 +215,34 @@ export class BinaryTreeForWeather {
             this.insert(obj);
         });
     }
-}
+    
+    /**
+     * 전체 주소를 기입하면 그에 해당하는 데이터를 반환. 
+     * 해당 주소값이 존재하지 않으면 null을 반환.
+     * @param {string} targetAddress - 1, 2, 3단계가 합쳐진 전체 주소. 
+     */
+    search(targetAddress) {
+        targetAddress = addTool.changeAddress(targetAddress);
+        let targetNode = this._search(this._root, targetAddress);
+        return targetNode ? targetNode.getData() : null;
+    }
 
-function testBinaryTree() {
-    let bt = new BinaryTreeForWeather(records);
-    console.log(bt.addressCodeTable);
-}
+    /**
+     * 
+     * @param {Node} node 
+     * @param {string} targetAddress
+     * @returns {Node}
+     */
+    _search(node, targetAddress) {
+        if (!node) return null;
 
-testBinaryTree();
+        let targetValue = this.addressCodeTable[targetAddress];
+        if (node.value == targetValue) return node;
+        if (node.value > targetValue) {
+            node = this._search(node.leftChild, targetAddress);
+        } else {
+            node = this._search(node.rightChild, targetAddress);
+        }
+        return node;
+    }
+}
