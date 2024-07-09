@@ -1,4 +1,4 @@
-import { changeAddress } from "./change-address.js";
+import { changeAddress } from "../change-address.js";
 import assert from 'node:assert/strict';
 
 function testChangeAddressSimple() {

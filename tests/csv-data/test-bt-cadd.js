@@ -2,8 +2,8 @@
  * binary tree와 change address 기능 통합 테스트.
  */
 
-import { BinaryTreeForWeather } from "./binary-tree.js";
-import { records } from "./read-data.js";
+import { BinaryTreeForWeather } from "../binary-tree.js";
+import { records } from "../read-data.js";
 import assert from 'node:assert/strict';
 
 let bt = new BinaryTreeForWeather(records);

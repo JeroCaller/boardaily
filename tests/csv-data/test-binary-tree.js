@@ -1,5 +1,5 @@
-import { BinaryTreeForWeather } from "./binary-tree.js";
-import { records } from "./read-data.js";
+import { BinaryTreeForWeather } from "../binary-tree.js";
+import { records } from "../read-data.js";
 
 function testBinaryTree() {
     let bt = new BinaryTreeForWeather(records);
