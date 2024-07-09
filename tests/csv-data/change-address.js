@@ -9,7 +9,7 @@
 export function changeAddress(targetAddress) {
     targetAddress = targetAddress.trim();
 
-    // {축약 : 원문}
+    // {원문: [축약]}
     const addressTable = {
         /*
         '서울': '서울특별시',
