@@ -24,8 +24,16 @@ export class WeatherData {
         this.humidities = [];
         this.ptys = [];  // 강수 형태
 
-        this.extractWeatherData();
-        this.sortInFcstTime();
+        this.allData = [
+            this.temperatures,
+            this.precipitations,
+            this.skies,
+            this.humidities,
+            this.ptys
+        ];
+
+        this._extractWeatherData();
+        this._sortInFcstTime();
     }
 
     getTemperatures() {return this.temperatures}
@@ -34,7 +42,25 @@ export class WeatherData {
     getHumidities() {return this.humidities}
     getPtys() {return this.ptys}
 
-    extractWeatherData() {
+    /**
+     * 
+     * @returns {object}
+     */
+    getAllData() {
+        let result = {};
+        for (let cate of this.allData) {
+            let categoryName = cate[0].category;
+            if (!(categoryName in result)) {
+                result[categoryName] = [];
+            }
+            for (let dataObj of cate) {
+                result[categoryName].push(dataObj);
+            }
+        }
+        return result;
+    }
+
+    _extractWeatherData() {
         for (let dataObj of this.weatherData) {
             switch (dataObj.category) {
                 case "T1H":
@@ -59,16 +85,8 @@ export class WeatherData {
     /**
      * 예보시각이 작은 순부터 오름차순으로 정렬.
      */
-    sortInFcstTime() {
-        let targets = [
-            this.temperatures,
-            this.precipitations,
-            this.skies,
-            this.humidities,
-            this.ptys
-        ];
-
-        for (let arr of targets) {
+    _sortInFcstTime() {
+        for (let arr of this.allData) {
             arr.sort((a, b) => {
 
                 function getDateTimeInfo(obj) {

@@ -9,7 +9,8 @@ function testWeatherData() {
     //console.log(wData.getPrecipitations());
     //console.log(wData.getHumidities());
     //console.log(wData.getPtys());
-    console.log(wData.getSkies());
+    //console.log(wData.getSkies());
+    console.log(wData.getAllData());
 }
 
 testWeatherData();
