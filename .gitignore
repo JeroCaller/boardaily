@@ -4,3 +4,5 @@ node_modules
 .env
 tests/weather-api-test/error.txt
 tests/weather-api-test/response-record/
+tests/integration-test/res-folder/
+tests/integration-test/weather-data/
