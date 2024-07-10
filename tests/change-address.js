@@ -4,9 +4,14 @@
  * >> console.log(changeAddress('서울'));
  * >> '서울특별시'
  * @param {string} targetAddress 
+ * @param {boolean} autoAdd - 1, 2단계 주소명이 서로 같은 경우, 1단계 주소만 넣어도 
+ * 2단계 주소를 자동으로 넣을지 결정. true시 실행됨. false 또는 생략 시 실행되지 않음.
+ * @example
+ * >> console.log(changeAddress('세종', true))  // '세종특별자치시 세종특별자치시'
+ * >> console.log(changeAddress('세종')) // '세종특별자치시'
  * @returns {string} 변환된 주소 문자열
  */
-export function changeAddress(targetAddress) {
+export function changeAddress(targetAddress, autoAdd) {
     targetAddress = targetAddress.trim();
 
     // {원문: [축약]}
@@ -43,7 +48,9 @@ export function changeAddress(targetAddress) {
     if (sejong) {
         switch (sejong.length) {
             case 1:
-                result = '세종특별자치시 ';
+                if (autoAdd) {
+                    result = '세종특별자치시 ';
+                }
             case 2:
                 result += targetAddress.replace(/세종(?=\s|$)/g, '세종특별자치시');
         }

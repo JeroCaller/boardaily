@@ -56,12 +56,12 @@ function testChangeAddressStageThree() {
 }
 
 function testChangeAddressSejong() {
-    assert.strictEqual(changeAddress('세종'), '세종특별자치시 세종특별자치시');
-    assert.strictEqual(changeAddress('세종 세종'), '세종특별자치시 세종특별자치시');
-    assert.strictEqual(changeAddress('세종특별자치시'), '세종특별자치시 세종특별자치시');
-    assert.strictEqual(changeAddress('세종특별자치시 조치원읍'), '세종특별자치시 세종특별자치시 조치원읍');
-    assert.strictEqual(changeAddress('세종 조치원읍'), '세종특별자치시 세종특별자치시 조치원읍');
-    assert.strictEqual(changeAddress('세종 세종특별자치시'), '세종특별자치시 세종특별자치시');
+    assert.strictEqual(changeAddress('세종', true), '세종특별자치시 세종특별자치시');
+    assert.strictEqual(changeAddress('세종 세종', true), '세종특별자치시 세종특별자치시');
+    assert.strictEqual(changeAddress('세종특별자치시', true), '세종특별자치시 세종특별자치시');
+    assert.strictEqual(changeAddress('세종특별자치시 조치원읍', true), '세종특별자치시 세종특별자치시 조치원읍');
+    assert.strictEqual(changeAddress('세종 조치원읍', true), '세종특별자치시 세종특별자치시 조치원읍');
+    assert.strictEqual(changeAddress('세종 세종특별자치시', true), '세종특별자치시 세종특별자치시');
 }
 
 testChangeAddressSimple();
