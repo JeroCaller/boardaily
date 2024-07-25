@@ -1,0 +1,25 @@
+:host {
+    background-color: darkseagreen;
+    width: 100%;
+}
+#choose-region {
+    margin: 1em;
+}
+#drop-downs {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1em;
+    width: 80%;
+}
+#drop-downs > select {
+    font-size: 1em;
+    width: 11em;
+    height: 1.5em;
+}
+input[type="button"] {
+    background-color: white;
+    border: none;
+    cursor: pointer;
+    padding: 0.5em;
+}

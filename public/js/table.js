@@ -5,6 +5,7 @@ import { createCalendarElement } from './table-page/calendar/calendar.js';
 import { createTodoListElement } from './table-page/todolist/todolist.js';
 import { createWatchElement } from './table-page/watch/watch.js';
 import { createDateCalculatorElement } from './table-page/date-calculator/date-calculator.js';
+import { createWeatherElement } from './table-page/weather/weather.js';
 import * as helper from './helper.js';
 import { loadBgImage } from './functions.js';
 import { insertFooterHTML } from './footer.js';
@@ -51,6 +52,9 @@ function attachToolElement(currentPageName, parentElement) {
             break;
         case "date-calculator":
             toolElement = createDateCalculatorElement();
+            break;
+        case "weather":
+            toolElement = createWeatherElement();
             break;
         case undefined:
             break;
